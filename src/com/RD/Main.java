@@ -1,6 +1,5 @@
 package com.RD;
 
-import library.Library;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -11,7 +10,7 @@ import java.time.LocalDate;
  * @author Hongping Cai
  * @version 2018-02-12
  */
-public class LibraryApp
+public class Main
 {
     /**
      * execute the program
