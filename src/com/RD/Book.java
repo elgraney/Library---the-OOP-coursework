@@ -10,8 +10,10 @@ public class Book {
     private String[] authors;
     private String id;
     private int year;
+    private int totalQty;
+    private int availibleQty;
 
-    public Book(String title, String[] authors, String id, int year){}
+    public Book(String id, String title, String[] authors, int year, int Qty){}
 
     public void getAuthors(){}
     public void getTitle(){}
