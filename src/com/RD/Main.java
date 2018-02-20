@@ -1,6 +1,5 @@
 package com.RD;
 
-import library.Library;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -11,8 +10,7 @@ import java.time.LocalDate;
  * @author Hongping Cai
  * @version 2018-02-12
  */
-public class LibraryApp
-{
+public class Main {
     /**
      * execute the program
      *
@@ -24,7 +22,7 @@ public class LibraryApp
         System.out.println("**************************************************");
         System.out.println("* Loading data ...");
         System.out.println("**************************************************");
-        Library lib = new Library("data/books.txt","data/members.txt", "data/bookloans.txt");
+        Library lib = new Library("books.txt","members.txt", "bookloans.txt");
         lib.showAllBooks();    // show all the book records
         lib.showAllMembers();  // show all the member records
         lib.showAllBookLoans();// show all the book loan records
@@ -112,9 +110,15 @@ public class LibraryApp
         boolean isValidInput = true;
         char inChar;
         boolean moreRequirement = false;
+
+        /*
         do {
             isValidInput = true;
             inChar = getUserInput();
+
+
+
+
             switch (inChar){
                 case 's': case 'S'://search for one book
                     lib.searchBook();
@@ -146,6 +150,9 @@ public class LibraryApp
                 moreRequirement = anyOtherRequirement();
             }
         } while ((!isValidInput)||(moreRequirement));
+
+
+        */
     }
     /**
      * Display all functions of the library management system.
