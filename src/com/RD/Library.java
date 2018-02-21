@@ -25,6 +25,7 @@ public class Library {
             importBooksFile(file1);
             importMembersFile(file2);
             importLoansFile(file3);
+            saveChanges(file1, file2, file3);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,7 +93,7 @@ public class Library {
 
             String[] values = line.split(",");
 
-            memberList.add(new Member(values[0], values[1], values[2],LocalDate.parse(values[3])));
+            loanList.add(new Loan(values[0], values[1], values[2],LocalDate.parse(values[3])));
             //testing
             System.out.println(values[0]);//id
             System.out.println(values[1]);//bookid
@@ -109,14 +110,33 @@ public class Library {
     public void showAllBooks(){}
     public void showAllMembers(){}
     public void showAllBookLoans(){}
-    public void saveChanges(String file1, String file2, String file3){}
+
+
+
+    //needs get methods to work
+    public void saveChanges(String file1, String file2, String file3){
+        Writer writer = null;
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("test.txt"), "utf-8"));
+            for(int i=0; i<bookList.size(); i++){
+
+            }
+            writer.write("something");
+            writer.close();
+        }catch (IOException e){
+            System.out.println("Write failed");
+        }
+    }
+
     public void searchBook(String name){}
     //change firstName, secondName to just one big name
     public void searchMember(String firstName, String secondName1){}
     //change firstName, secondName to just one big name
     public void borrowBook(String name, String authorFirstName, String authorSecondName){}
     public void returnBook(int id){}
-    public void addNewBook(String name, String[] authors, int year,int quantity){}
+    public void addNewBook(String name, String[] authors, int year,int quantity){
+
+    }
     public void addNewMember(String firstName, String secondName, LocalDate date){}
     public void changeQuantity(String name, int quantity){}
     public void calculateFine(){}

@@ -11,9 +11,14 @@ public class Loan {
     private LocalDate date;
     private String bookId;
     private String memberId;
-    private LocalTime borrowDate;
+    private LocalDate borrowDate;
 
-    public Loan(String title, String bookId, String memberId, LocalTime borrowTime){}
+    public Loan(String title, String bookId, String memberId, LocalDate borrowDate){
+        this.title = title;
+        this.bookId = bookId;
+        this.memberId = memberId;
+        this.borrowDate = borrowDate;
+    }
 
     public void getTitle(){}
     public void getDate(){}
