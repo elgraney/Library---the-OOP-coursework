@@ -13,7 +13,7 @@ public class Loan {
     private String memberId;
     private LocalTime borrowDate;
 
-    public Loan(String title, String bookId, String memberId, LocalTime borrowTime, LocalDate borrowDate){}
+    public Loan(String title, String bookId, String memberId, LocalTime borrowTime){}
 
     public void getTitle(){}
     public void getDate(){}

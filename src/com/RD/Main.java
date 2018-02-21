@@ -1,5 +1,6 @@
 package com.RD;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDate;
@@ -16,8 +17,7 @@ public class Main {
      *
      * @param args String array for input
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         // STEP1: initiate the library by loading data from 3 text files
         System.out.println("**************************************************");
         System.out.println("* Loading data ...");
