@@ -20,8 +20,16 @@ public class Loan {
         this.borrowDate = borrowDate;
     }
 
-    public void getTitle(){}
-    public void getDate(){}
-    public void getReturnDate(){}
-    public void getID(){}
+    public String getTitle(){
+        return title;
+    }
+    public LocalDate getDate(){
+        return LocalDate.now();
+    }
+    public LocalDate getReturnDate(){
+        return borrowDate.plusDays(5);
+    }
+    public String getID(){
+        return memberId;
+    }
 }

@@ -15,8 +15,17 @@ public class Book {
 
     public Book(String id, String title, String[] authors, int year, int Qty){}
 
-    public void getAuthors(){}
-    public void getTitle(){}
-    public void setTitle(){}
-    public void setAuthors(){}
+    public String[] getAuthors(){
+        return authors;
+    }
+    public String getTitle(){
+        return title;
+    }
+
+    public void setTitle(String newTitle){
+        title = newTitle;
+    }
+    public void setAuthors(String newAuthor){
+        authors.add(newAuthor); //unsure if correct
+    }
 }

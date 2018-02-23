@@ -14,8 +14,16 @@ public class Member {
 
     public Member(String id, String firstName, String secondName, LocalDate dateJoin){}
 
-    public void getName(){}
-    public void getLoans(){}
-    public void setName(){}
-    public void setLoans(){}
+    public String getName(){
+        return name;
+    }
+    public Loan[] getLoans(){
+        return loans;
+    }
+    public void setName(String newName){
+        name = newName;
+    }
+    public void setLoans(String newLoan){
+        loans.add(newLoan); //unsure if correct
+    }
 }
