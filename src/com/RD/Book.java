@@ -25,7 +25,7 @@ public class Book {
     public void setTitle(String newTitle){
         title = newTitle;
     }
-    public void setAuthors(String newAuthor){
-        authors.add(newAuthor); //unsure if correct
+    public void setAuthors(String[] authorsList){
+        this.authors = authorsList; //unsure if correct
     }
 }
