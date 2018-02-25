@@ -29,6 +29,19 @@ public class Loan {
     public LocalDate getReturnDate(){
         return borrowDate.plusDays(5);
     }
+    public String getId(){
+        return bookId;
+    }
+    public String getMemberId(){
+        return memberId;
+    }
+    public LocalDate getBorrowDate(){
+        return borrowDate;
+    }
+    public String getBookId(){
+        return bookId;
+    }
+
     public String getID(){
         return memberId;
     }
