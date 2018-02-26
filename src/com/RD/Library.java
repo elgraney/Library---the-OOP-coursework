@@ -187,15 +187,8 @@ public class Library {
         }
     }
 
-    public Book searchBook(String name){
-        ArrayList<Book> searchResults = new ArrayList<Book>();
-        for(int i = 0; i<bookList.size(); i++){
-            if(bookList.get(i).getTitle().contains(name)){
-                searchResults.add(bookList.get(i));
-            }
-        }
-    }
-
+    public void searchBook(String name){}
+    //change firstName, secondName to just one big name
     public void searchMember(String firstName, String secondName1){}
     //change firstName, secondName to just one big name
     public void borrowBook(String name, String authorFirstName, String authorSecondName){}
