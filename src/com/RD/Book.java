@@ -13,7 +13,13 @@ public class Book {
     private int totalQty;
     private int availibleQty;
 
-    public Book(String id, String title, String[] authors, int year, int Qty){}
+    public Book(String id, String title, String[] authors, int year, int qty){
+        this.id = id;
+        this.title = title;
+        this.authors = authors;
+        this.year = year;
+        this.totalQty = qty;
+    }
 
     public String[] getAuthors(){
         return authors;
@@ -21,11 +27,19 @@ public class Book {
     public String getTitle(){
         return title;
     }
-
+    public String getId(){
+        return id;
+    }
+    public int getYear(){
+        return year;
+    }
+    public int getTotalQty(){
+        return totalQty;
+    }
     public void setTitle(String newTitle){
         title = newTitle;
     }
-    public void setAuthors(String newAuthor){
-        authors.add(newAuthor); //unsure if correct
+    public void setAuthors(String[] authorsList){
+        this.authors = authorsList; //unsure if correct
     }
 }
