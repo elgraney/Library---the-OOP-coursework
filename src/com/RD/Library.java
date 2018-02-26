@@ -28,8 +28,6 @@ public class Library {
             importLoansFile(file3);
 
 
-            showAllBooks();
-
             saveChanges(file1, file2, file3);
         } catch (IOException e) {
             e.printStackTrace();
@@ -187,9 +185,33 @@ public class Library {
         }
     }
 
-    public void searchBook(String name){}
-    //change firstName, secondName to just one big name
-    public void searchMember(String firstName, String secondName1){}
+
+
+    public ArrayList<Book> searchBook(String name){
+        ArrayList<Book> searchResults = null;
+        for(int i = 0; i<bookList.size(); i++) {
+            Book book = bookList.get(i);
+            if (book.getTitle().toLowerCase().contains(name.toLowerCase())){
+                searchResults.add(book);
+            }
+        }
+        return searchResults;
+    }
+
+    public ArrayList<Member> searchMember(String firstName, String secondName){
+        ArrayList<Member> searchResults = null;
+        for(int i = 0; i<memberList.size(); i++) {
+            Member member = memberList.get(i);
+            if (member.getFirstName().toLowerCase().contains(firstName.toLowerCase())||
+                    member.getSecondName().toLowerCase().contains(secondName.toLowerCase())){
+                searchResults.add(member);
+            }
+        }
+        return searchResults;
+    }
+
+    
+
     //change firstName, secondName to just one big name
     public void borrowBook(String name, String authorFirstName, String authorSecondName){}
     public void returnBook(int id){}
