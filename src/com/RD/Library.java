@@ -213,12 +213,34 @@ public class Library {
     
 
     //change firstName, secondName to just one big name
-    public void borrowBook(String name, String authorFirstName, String authorSecondName){}
-    public void returnBook(int id){}
-    public void addNewBook(String name, String[] authors, int year,int quantity){
-
+    public void borrowBook(String name, String authorFirstName, String authorSecondName){
+        ArrayList<Book> searchResults = searchBook(name);
+        if (searchResults!=null && searchResults.get(0).getTotalQty() >0 ){
+            //placeholder
+            System.out.println(searchResults.get(0).getTitle());
+        }
     }
-    public void addNewMember(String firstName, String secondName, LocalDate date){}
+    public void returnBook(int id){}
+
+    public void addNewBook(String name, String[] authors, int year,int quantity){
+        ArrayList<Book> searchResults = searchBook(name);
+        if (searchResults!=null && searchResults.size()<2){
+            searchResults.get(0).addAdditionalBooks(quantity);
+        }
+        else if (searchResults == null){
+            //add id in place of 999
+            bookList.add(new Book("999", name , authors, year, quantity));
+        }
+        else{
+            System.out.println("Search returned multiple entries. Please be more precise.");
+        }
+    }
+    public void addNewMember(String firstName, String secondName, LocalDate date){
+        //sort id
+        memberList.add(new Member("999",firstName,secondName,date));
+    }
+
+    
     public void changeQuantity(String name, int quantity){}
     public void calculateFine(){}
 

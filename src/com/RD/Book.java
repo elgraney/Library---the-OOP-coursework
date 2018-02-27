@@ -42,4 +42,9 @@ public class Book {
     public void setAuthors(String[] authorsList){
         this.authors = authorsList; //unsure if correct
     }
+
+    public void addAdditionalBooks(int qty){
+        totalQty +=qty;
+        availibleQty+=qty;
+    }
 }
