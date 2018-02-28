@@ -29,7 +29,7 @@ public class Main {
 
         // STEP2: test the library system
         System.out.println("\n* Start testing ...\n");
-        boolean isFixInput = false;
+        boolean isFixInput = true;
         if (isFixInput){
             // OPTIONT 1: Test the library system with fixed input.
             // When you start programming, you may pick this test mode.

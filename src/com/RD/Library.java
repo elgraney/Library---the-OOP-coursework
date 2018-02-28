@@ -188,7 +188,7 @@ public class Library {
 
 
     public ArrayList<Book> searchBook(String name){
-        ArrayList<Book> searchResults = null;
+        ArrayList<Book> searchResults = new ArrayList<Book>();
         for(int i = 0; i<bookList.size(); i++) {
             Book book = bookList.get(i);
             if (book.getTitle().toLowerCase().contains(name.toLowerCase())){
@@ -199,7 +199,7 @@ public class Library {
     }
 
     public ArrayList<Member> searchMember(String firstName, String secondName){
-        ArrayList<Member> searchResults = null;
+        ArrayList<Member> searchResults = new ArrayList<Member>();
         for(int i = 0; i<memberList.size(); i++) {
             Member member = memberList.get(i);
             if (member.getFirstName().toLowerCase().contains(firstName.toLowerCase())||
@@ -220,7 +220,9 @@ public class Library {
             System.out.println(searchResults.get(0).getTitle());
         }
     }
-    public void returnBook(int id){}
+    public void returnBook(int id){
+
+    }
 
     public void addNewBook(String name, String[] authors, int year,int quantity){
         ArrayList<Book> searchResults = searchBook(name);
@@ -241,7 +243,16 @@ public class Library {
     }
 
     
-    public void changeQuantity(String name, int quantity){}
+    public void changeQuantity(String name, int quantity){
+        Book book = searchBook(name).get(0);
+        if( (book.getAvailibleQty() +quantity) >= 0){
+            book.changeAvailibleQty(quantity);
+        }
+        else{
+            System.out.println("There are not enough available books of that name to take that many.");
+        }
+
+    }
     public void calculateFine(){}
 
 

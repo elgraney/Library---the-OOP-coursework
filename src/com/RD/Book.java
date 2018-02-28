@@ -47,4 +47,10 @@ public class Book {
         totalQty +=qty;
         availibleQty+=qty;
     }
+    public void changeAvailibleQty(int qty){
+        availibleQty += qty;
+    }
+    public int getAvailibleQty(){
+        return availibleQty;
+    }
 }
