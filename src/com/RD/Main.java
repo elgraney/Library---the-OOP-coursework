@@ -12,51 +12,53 @@ import java.time.LocalDate;
  * @version 2018-02-12
  */
 public class Main {
-    /**
-     * execute the program
-     *
-     * @param args String array for input
-     */
-    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-        // STEP1: initiate the library by loading data from 3 text files
-        System.out.println("**************************************************");
-        System.out.println("* Loading data ...");
-        System.out.println("**************************************************");
-        Library lib = new Library("books.txt","members.txt", "bookloans.txt");
-        lib.showAllBooks();    // show all the book records
-        lib.showAllMembers();  // show all the member records
-        lib.showAllBookLoans();// show all the book loan records
+        /**
+         * execute the program
+         *
+         * @param args String array for input
+         */
+        public static void main(String[] args)
+        {
+            // STEP1: initiate the library by loading data from 3 text files
+            System.out.println("**************************************************");
+            System.out.println("* Loading data ...");
+            System.out.println("**************************************************");
+            Library lib = new Library("data/books.txt","data/members.txt",
+                    "data/bookloans.txt");
+            lib.showAllBooks();    // show all the book records
+            lib.showAllMembers();  // show all the member records
+            lib.showAllBookLoans();// show all the book loan records
 
-        // STEP2: test the library system
-        System.out.println("\n* Start testing ...\n");
-        boolean isFixInput = true;
-        if (isFixInput){
-            // OPTIONT 1: Test the library system with fixed input.
-            // When you start programming, you may pick this test mode.
-            testWithFixInput(lib);
+            // STEP2: test the library system
+            System.out.println("\n* Start testing ...\n");
+            boolean isFixInput = false;
+            if (isFixInput){
+                // OPTION 1: Test the library system with fixed input.
+                // When you start programming, you may pick this test mode.
+                testWithFixInput(lib);
+            }
+            else{
+                // OPTION 2: Test the library system with all keyboard input.
+                // This test mode is closer to the real scenario.
+                testWithKeyboardInput(lib);
+            }
+
+            // STEP3: save the changes before quitting the system
+            System.out.println("**************************************************");
+            System.out.println("* Save the changes ...");
+            System.out.println("**************************************************");
+            lib.saveChanges("data/books.txt","data/members.txt","data/bookloans.txt");
+
+            System.out.println("Bye ...");
         }
-        else{
-            // OPTION 2: Test the library system with all keyboard input.
-            // This test mode is closer to the real scenario.
-            testWithKeyboardInput(lib);
-        }
 
-        // STEP3: save the changes before quitting the system
-        System.out.println("**************************************************");
-        System.out.println("* Save the changes ...");
-        System.out.println("**************************************************");
-        lib.saveChanges("data/books.txt","data/members.txt","data/bookloans.txt");
-
-        System.out.println("Bye ...");
-    }
-
-    /**
-     * This method is used for testing the library system with fixed input.
-     * During my testing, I will likely to change the input for each option.
-     * You may use this method for testing your codes.
-     *
-     * @param lib the tested library object
-     */
+        /**
+         * This method is used for testing the library system with fixed input.
+         * During my testing, I will likely to change the input for each option.
+         * You may use this method for testing your codes.
+         *
+         * @param lib the tested library object
+         */
     public static void testWithFixInput(Library lib){
         boolean isValidInput = true;
         char inChar;
@@ -110,16 +112,10 @@ public class Main {
         boolean isValidInput = true;
         char inChar;
         boolean moreRequirement = false;
-
-        /*
         do {
             isValidInput = true;
             inChar = getUserInput();
-
-
-
-
-            switch (inChar){
+            /*switch (inChar){
                 case 's': case 'S'://search for one book
                     lib.searchBook();
                     break;
@@ -146,19 +142,17 @@ public class Main {
                 default:
                     isValidInput = false;
             }
+            */
             if (isValidInput){
                 moreRequirement = anyOtherRequirement();
             }
         } while ((!isValidInput)||(moreRequirement));
-
-
-        */
     }
     /**
      * Display all functions of the library management system.
-     * Get the user's input (one charactor from a list of charactors)
+     * Get the user's input (one character from a list of characters)
      *
-     * @return  the user's input charactor
+     * @return  the user's input character
      */
     private static char getUserInput(){
         System.out.println("**************************************************");
@@ -173,12 +167,11 @@ public class Main {
         System.out.println("*Enter c: [c]hange the stock quantity for an existing book.");
         System.out.println("*Enter q: [q]uit.");
         Scanner in = new Scanner(System.in);
-        char inchar = in.nextLine().charAt(0);
-        in.close();
+        char inchar = in.next().charAt(0);
         return inchar;
     }
     /**
-     * After finishing one service, ask the user if any other requiements
+     * After finishing one service, ask the user if any other requirements
      *
      * @return yes (true) or no (false)
      */
@@ -188,7 +181,7 @@ public class Main {
         Scanner in = new Scanner(System.in);
         do {
             System.out.println("\n* Any other requirements?[y/n]");
-            char inCh = in.nextLine().charAt(0);
+            char inCh = in.next().charAt(0);
             isYesOrNoInput = true;
             if ((inCh == 'y') || (inCh == 'Y')){
                 moreRequirement = true;
@@ -201,7 +194,6 @@ public class Main {
             }
 
         } while (!isYesOrNoInput);
-        in.close();
         return moreRequirement;
     }
 }

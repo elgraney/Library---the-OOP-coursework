@@ -226,10 +226,10 @@ public class Library {
 
     public void addNewBook(String name, String[] authors, int year,int quantity){
         ArrayList<Book> searchResults = searchBook(name);
-        if (searchResults!=null && searchResults.size()<2){
+        if (searchResults.size() != 0 && searchResults.size()<2){
             searchResults.get(0).addAdditionalBooks(quantity);
         }
-        else if (searchResults == null){
+        else if (searchResults.size() == 0){
             //add id in place of 999
             bookList.add(new Book("999", name , authors, year, quantity));
         }
