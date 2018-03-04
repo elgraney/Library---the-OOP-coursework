@@ -9,7 +9,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.time.temporal.ChronoUnit;
 
+import static java.time.temporal.ChronoUnit.DAYS;
 
 
 public class Library {
@@ -215,11 +217,45 @@ public class Library {
     //change firstName, secondName to just one big name
     public void borrowBook(String name, String authorFirstName, String authorSecondName){
         ArrayList<Book> searchResults = searchBook(name);
-        if (searchResults!=null && searchResults.get(0).getTotalQty() >0 ){
-            //placeholder
-            System.out.println(searchResults.get(0).getTitle());
+        if (searchResults.size()>0){
+            Book book = searchResults.get(0);
+            System.out.println("Book '"+book.getTitle()+"' selected for loan.");
+            System.out.println("***Should do a check to make sure this is the book they want***");
+            if (searchResults.size()>0 && searchResults.get(0).getTotalQty() >0 ){
+
+                loanList.add(new Loan(book.getTitle(), book.getId(), "MemberID Placeholder", LocalDate.now() ));
+                System.out.println("***MemberID Placeholder in use***");
+
+                }
+            else if (searchResults.get(0).getTotalQty() < 1){
+                System.out.println("There are no available copies of the book '"+book.getTitle()+"'.");
+            }
         }
+        else{
+            System.out.println("No search results found.");
+        }
+        System.out.println("Would you like to select another book?");
+        //do yes no
+        Scanner in = new Scanner(System.in);
+        boolean isYesOrNoInput;
+        do {
+            char inCh = in.next().charAt(0);
+            isYesOrNoInput = true;
+            if ((inCh == 'y') || (inCh == 'Y')){
+                //ADD BORROW BOOK
+                System.out.println("***REPEAT BORROW BOOK (BUT FIRST WORK OUT HOW INPUTS WILL WORK)");
+            }
+            else if ((inCh == 'n') || (inCh == 'N')){
+                System.out.println("Returning to menu...");
+            }
+            else {
+                System.out.println("******** Wrong input. Try again.");
+                isYesOrNoInput = false;
+            }
+
+        } while (!isYesOrNoInput);
     }
+
     public void returnBook(int id){
 
     }
@@ -231,15 +267,38 @@ public class Library {
         }
         else if (searchResults.size() == 0){
             //add id in place of 999
-            bookList.add(new Book("999", name , authors, year, quantity));
+            bookList.add(new Book(getNewBookId(), name , authors, year, quantity));
         }
         else{
             System.out.println("Search returned multiple entries. Please be more precise.");
         }
     }
     public void addNewMember(String firstName, String secondName, LocalDate date){
-        //sort id
-        memberList.add(new Member("999",firstName,secondName,date));
+        memberList.add(new Member(getNewMemberId(),firstName,secondName,date));
+    }
+    public String getNewBookId(){
+        int highest = 0;
+
+        for (Book book: bookList){
+            int currentId = Integer.parseInt(book.getId());
+            if (currentId> highest){
+                highest = currentId;
+            }
+        }
+        String newId = Integer.toString(highest + 1);
+        return newId;
+    }
+    public String getNewMemberId(){
+        int highest = 0;
+
+        for (Member member : memberList){
+            int currentId = Integer.parseInt(member.getId());
+            if (currentId> highest){
+                highest = currentId;
+            }
+        }
+        String newId = Integer.toString(highest + 1);
+        return newId;
     }
 
     
@@ -253,7 +312,40 @@ public class Library {
         }
 
     }
-    public void calculateFine(){}
+    public Boolean calculateFine(LocalDate borrowDate){
+        LocalDate currentDate = LocalDate.now();
+        int daysBetween = (int) DAYS.between(borrowDate, currentDate);
+        //test
+        System.out.println(daysBetween);
+        Boolean canReturn = false;
+        if (daysBetween>30){
+            double fine = (daysBetween - 30) * 0.1;
+            System.out.println("This book is overdue and has accumulated a fine of "+fine);
+
+            Scanner in = new Scanner(System.in);
+            boolean isYesOrNoInput;
+            do {
+                System.out.println("Would you like to pay this fine now?");
+                char inCh = in.next().charAt(0);
+                isYesOrNoInput = true;
+                if ((inCh == 'y') || (inCh == 'Y')){
+                    System.out.println("Fine paid.");
+                    canReturn = true;
+                }
+                else if ((inCh == 'n') || (inCh == 'N')){
+                    System.out.println("Fine not paid, book return unsuccessful");
+                    System.out.println("Please try again when you can pay the fine.");
+
+                } else {
+                    System.out.println("******** Wrong input. Try again.");
+                    isYesOrNoInput = false;
+                }
+
+            } while (!isYesOrNoInput);
+
+        }
+        return canReturn;
+    }
 
 
 
