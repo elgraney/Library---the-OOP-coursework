@@ -39,18 +39,16 @@ public class Book {
     public void setTitle(String newTitle){
         title = newTitle;
     }
-    public void setAuthors(String[] authorsList){
-        this.authors = authorsList; //unsure if correct
-    }
+
 
     public void addAdditionalBooks(int qty){
         totalQty +=qty;
         availibleQty+=qty;
     }
-    public void changeAvailibleQty(int qty){
+    public void changeAvailableQty(int qty){
         availibleQty += qty;
     }
-    public int getAvailibleQty(){
+    public int getAvailableQty(){
         return availibleQty;
     }
 }
