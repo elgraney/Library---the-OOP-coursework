@@ -2,6 +2,7 @@ package com.RD;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 
 import java.time.LocalTime;
@@ -12,6 +13,7 @@ import java.util.Scanner;
 import java.time.temporal.ChronoUnit;
 
 import static java.time.temporal.ChronoUnit.DAYS;
+import static jdk.nashorn.internal.objects.NativeMath.round;
 
 
 public class Library {
@@ -28,6 +30,7 @@ public class Library {
             importBooksFile(file1);
             importMembersFile(file2);
             importLoansFile(file3);
+            calculateAvailableCopies();
 
 
             saveChanges(file1, file2, file3);
@@ -36,6 +39,22 @@ public class Library {
         }
 
 
+    }
+
+    private void calculateAvailableCopies(){
+        for (Book book: bookList){
+            int available = book.getTotalQty();
+            for (Loan loan: loanList){
+                if (loan.getTitle() == book.getTitle()){
+                    available -= 1;
+                    if (available<0){
+                        throw new RuntimeException("Error in text files: More loans of a book than total copies.");
+                    }
+                }
+            }
+            book.changeAvailibleQty(available);
+
+        }
     }
 
     private void importBooksFile(String path) throws IOException {
@@ -188,19 +207,71 @@ public class Library {
     }
 
 
-
-    public ArrayList<Book> searchBook(String name){
+    public void searchBook(){System.out.println("***PLACEHOLDER FOR USER INPUT***");}
+    public void searchBook(String name){
+        //this function specifically prints the search results found in getBookSearchResults
+        ArrayList<Book> searchResults = getBookSearchResults(name);
+        System.out.println("Search Results:");
+        if (searchResults.size() > 0 ){
+            for (int i = 0; i<searchResults.size(); i++){
+                Book book = searchResults.get(i);
+                System.out.printf("Title: %s, Id: %s, Total copies: %s, Available copies: %s\n",
+                        book.getTitle(), book.getId(), book.getTotalQty(), book.getAvailibleQty());
+            }
+        }
+        else {
+            System.out.println("No matches found");
+        }
+    }
+    private ArrayList<Book> getBookSearchResults(String name){
+        //actual seach function here. returns arrayList of search results
         ArrayList<Book> searchResults = new ArrayList<Book>();
         for(int i = 0; i<bookList.size(); i++) {
             Book book = bookList.get(i);
-            if (book.getTitle().toLowerCase().contains(name.toLowerCase())){
+            if (book.getTitle().toLowerCase().contains(name.toLowerCase())) {
+                System.out.println(book.getTitle());
                 searchResults.add(book);
             }
         }
         return searchResults;
     }
 
-    public ArrayList<Member> searchMember(String firstName, String secondName){
+
+    public void searchMember(){System.out.println("***PLACEHOLDER FOR USER INPUT***");}
+    public void searchMember(String firstName, String secondName){
+        //this function specifically prints the search results found in getBookSearchResults
+        ArrayList<Member> searchResults = getMemberSearchResults(firstName,secondName);
+        System.out.println("Search Results:");
+        if (searchResults.size() > 0 ){
+            for (int i = 0; i<searchResults.size(); i++){
+                Member member = searchResults.get(i);
+                System.out.printf("Name: %s %s, ID: %s, Join Date: %s\n",
+                        member.getFirstName(), member.getSecondName(), member.getId(), member.getDateJoin());
+                System.out.println("Current loans:");
+                ArrayList<Loan> loans = new ArrayList<>();
+                for (Loan loan: loanList){
+                    if (loan.getMemberId() == member.getId()){
+                        loans.add(loan);
+                    }
+                }
+                System.out.printf("You currently have %d borrowed books",loans.size());
+                for (Loan loan: loans){
+                    System.out.printf("Title: %s, Book Id: %s, Borrow Date: %s, Return Date: %s\n",
+                            loan.getTitle(), loan.getBookId(), loan.getBorrowDate(), loan.getReturnDate());
+                    if (checkfine(loan.getBorrowDate())){
+                        System.out.printf("This book is overdue and has accumulated a fine of £%.2f\n",
+                                calcFineValue(loan.getBorrowDate()));
+                    }
+
+                }
+
+            }
+        }
+        else {
+            System.out.println("No matches found");
+        }
+    }
+    public ArrayList<Member> getMemberSearchResults(String firstName, String secondName){
         ArrayList<Member> searchResults = new ArrayList<Member>();
         for(int i = 0; i<memberList.size(); i++) {
             Member member = memberList.get(i);
@@ -216,7 +287,7 @@ public class Library {
 
     //change firstName, secondName to just one big name
     public void borrowBook(String name, String authorFirstName, String authorSecondName){
-        ArrayList<Book> searchResults = searchBook(name);
+        ArrayList<Book> searchResults = getBookSearchResults(name);
         if (searchResults.size()>0){
             Book book = searchResults.get(0);
             System.out.println("Book '"+book.getTitle()+"' selected for loan.");
@@ -252,16 +323,17 @@ public class Library {
                 System.out.println("******** Wrong input. Try again.");
                 isYesOrNoInput = false;
             }
-
         } while (!isYesOrNoInput);
     }
+
+
 
     public void returnBook(int id){
 
     }
 
     public void addNewBook(String name, String[] authors, int year,int quantity){
-        ArrayList<Book> searchResults = searchBook(name);
+        ArrayList<Book> searchResults = getBookSearchResults(name);
         if (searchResults.size() != 0 && searchResults.size()<2){
             searchResults.get(0).addAdditionalBooks(quantity);
         }
@@ -303,7 +375,7 @@ public class Library {
 
     
     public void changeQuantity(String name, int quantity){
-        Book book = searchBook(name).get(0);
+        Book book = getBookSearchResults(name).get(0);
         if( (book.getAvailibleQty() +quantity) >= 0){
             book.changeAvailibleQty(quantity);
         }
@@ -312,18 +384,35 @@ public class Library {
         }
 
     }
-    public Boolean calculateFine(LocalDate borrowDate){
+
+
+    private boolean checkfine(LocalDate borrowDate){
         LocalDate currentDate = LocalDate.now();
         int daysBetween = (int) DAYS.between(borrowDate, currentDate);
-        //test
-        System.out.println(daysBetween);
-        Boolean canReturn = false;
-        if (daysBetween>30){
-            double fine = (daysBetween - 30) * 0.1;
-            System.out.println("This book is overdue and has accumulated a fine of "+fine);
+        boolean overdue = false;
+        if (daysBetween>30) {
+            overdue = true;
+        }
+        return overdue;
+    }
+
+
+    private double calcFineValue(LocalDate borrowDate){
+        LocalDate currentDate = LocalDate.now();
+        int daysBetween = (int) DAYS.between(borrowDate, currentDate);
+        double fine = (daysBetween - 30) * 0.1;
+        return fine;
+    }
+
+
+    public Boolean handleFine(LocalDate borrowDate){
+        boolean canReturn= true;
+        if (checkfine(borrowDate)){
+            System.out.println("This book is overdue and has accumulated a fine of "+calcFineValue(borrowDate));
 
             Scanner in = new Scanner(System.in);
             boolean isYesOrNoInput;
+
             do {
                 System.out.println("Would you like to pay this fine now?");
                 char inCh = in.next().charAt(0);
@@ -335,6 +424,7 @@ public class Library {
                 else if ((inCh == 'n') || (inCh == 'N')){
                     System.out.println("Fine not paid, book return unsuccessful");
                     System.out.println("Please try again when you can pay the fine.");
+                    canReturn =false;
 
                 } else {
                     System.out.println("******** Wrong input. Try again.");
@@ -344,6 +434,7 @@ public class Library {
             } while (!isYesOrNoInput);
 
         }
+        //return to returnbook()
         return canReturn;
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/com/RD/Library.java" line="276" />
+    <bookmark url="file://$PROJECT_DIR$/src/com/RD/Library.java" line="298" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a25b6718-528b-49b2-97ab-589519929e69" name="Default" comment="" />
@@ -24,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/RD/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="179" column="8" selection-start-line="179" selection-start-column="8" selection-end-line="179" selection-end-column="31" />
+            <state relative-caret-position="351">
+              <caret line="92" column="41" selection-start-line="92" selection-start-column="41" selection-end-line="92" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -39,8 +39,8 @@
       <file leaf-file-name="Loan.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/RD/Loan.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+            <state relative-caret-position="283">
+              <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#523#524#0" expanded="true" />
@@ -53,12 +53,10 @@
       <file leaf-file-name="Book.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/RD/Book.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
+            <state relative-caret-position="487">
               <caret line="49" column="44" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
               <folding>
                 <element signature="e#1132#1133#0" expanded="true" />
-                <element signature="e#1166#1167#0" expanded="true" />
-                <element signature="e#1201#1202#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -67,32 +65,30 @@
       <file leaf-file-name="Member.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/RD/Member.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
+            <state relative-caret-position="453">
+              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#661#662#0" expanded="true" />
-                <element signature="e#694#695#0" expanded="true" />
+                <element signature="e#627#628#0" expanded="true" />
+                <element signature="e#660#661#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Library.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Library.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/RD/Library.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-834">
-              <caret line="192" column="62" selection-start-line="192" selection-start-column="62" selection-end-line="192" selection-end-column="62" />
+            <state relative-caret-position="198">
+              <caret line="293" column="55" selection-start-line="293" selection-start-column="55" selection-end-line="293" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#seperateAuthors#0;class#Library#0" expanded="false" />
                 <element signature="method#importMembersFile#0;class#Library#0" expanded="false" />
                 <element signature="method#importLoansFile#0;class#Library#0" expanded="false" />
-                <element signature="e#6208#6214#0" expanded="true" />
-                <element signature="e#6622#6630#0" expanded="true" />
-                <element signature="method#getNewBookId#0;class#Library#0" expanded="false" />
-                <element signature="method#getNewMemberId#0;class#Library#0" expanded="false" />
-                <element signature="method#changeQuantity#0;class#Library#0" expanded="false" />
+                <element signature="method#saveChanges#0;class#Library#0" expanded="false" />
+                <element signature="e#7746#7752#0" expanded="true" />
+                <element signature="e#9961#9969#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -149,10 +145,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/test.txt" />
-        <option value="$PROJECT_DIR$/src/com/RD/Member.java" />
-        <option value="$PROJECT_DIR$/src/com/RD/Loan.java" />
         <option value="$PROJECT_DIR$/src/com/RD/Book.java" />
         <option value="$PROJECT_DIR$/src/com/RD/Main.java" />
+        <option value="$PROJECT_DIR$/src/com/RD/Loan.java" />
+        <option value="$PROJECT_DIR$/src/com/RD/Member.java" />
         <option value="$PROJECT_DIR$/src/com/RD/Library.java" />
       </list>
     </option>
@@ -623,8 +619,6 @@
           <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding>
             <element signature="e#1132#1133#0" expanded="true" />
-            <element signature="e#1166#1167#0" expanded="true" />
-            <element signature="e#1201#1202#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -635,8 +629,8 @@
           <caret line="18" column="27" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#661#662#0" expanded="true" />
-            <element signature="e#694#695#0" expanded="true" />
+            <element signature="e#627#628#0" expanded="true" />
+            <element signature="e#660#661#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -650,11 +644,9 @@
             <element signature="method#seperateAuthors#0;class#Library#0" expanded="false" />
             <element signature="method#importMembersFile#0;class#Library#0" expanded="false" />
             <element signature="method#importLoansFile#0;class#Library#0" expanded="false" />
-            <element signature="e#6208#6214#0" expanded="true" />
-            <element signature="e#6622#6630#0" expanded="true" />
-            <element signature="method#getNewBookId#0;class#Library#0" expanded="false" />
-            <element signature="method#getNewMemberId#0;class#Library#0" expanded="false" />
-            <element signature="method#changeQuantity#0;class#Library#0" expanded="false" />
+            <element signature="method#saveChanges#0;class#Library#0" expanded="false" />
+            <element signature="e#7746#7752#0" expanded="true" />
+            <element signature="e#9961#9969#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -701,8 +693,6 @@
           <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
           <folding>
             <element signature="e#1132#1133#0" expanded="true" />
-            <element signature="e#1166#1167#0" expanded="true" />
-            <element signature="e#1201#1202#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -713,8 +703,8 @@
           <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#661#662#0" expanded="true" />
-            <element signature="e#694#695#0" expanded="true" />
+            <element signature="e#627#628#0" expanded="true" />
+            <element signature="e#660#661#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -728,11 +718,9 @@
             <element signature="method#seperateAuthors#0;class#Library#0" expanded="false" />
             <element signature="method#importMembersFile#0;class#Library#0" expanded="false" />
             <element signature="method#importLoansFile#0;class#Library#0" expanded="false" />
-            <element signature="e#6208#6214#0" expanded="true" />
-            <element signature="e#6622#6630#0" expanded="true" />
-            <element signature="method#getNewBookId#0;class#Library#0" expanded="false" />
-            <element signature="method#getNewMemberId#0;class#Library#0" expanded="false" />
-            <element signature="method#changeQuantity#0;class#Library#0" expanded="false" />
+            <element signature="method#saveChanges#0;class#Library#0" expanded="false" />
+            <element signature="e#7746#7752#0" expanded="true" />
+            <element signature="e#9961#9969#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -779,8 +767,6 @@
           <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
           <folding>
             <element signature="e#1132#1133#0" expanded="true" />
-            <element signature="e#1166#1167#0" expanded="true" />
-            <element signature="e#1201#1202#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -791,8 +777,8 @@
           <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#661#662#0" expanded="true" />
-            <element signature="e#694#695#0" expanded="true" />
+            <element signature="e#627#628#0" expanded="true" />
+            <element signature="e#660#661#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -806,11 +792,9 @@
             <element signature="method#seperateAuthors#0;class#Library#0" expanded="false" />
             <element signature="method#importMembersFile#0;class#Library#0" expanded="false" />
             <element signature="method#importLoansFile#0;class#Library#0" expanded="false" />
-            <element signature="e#6208#6214#0" expanded="true" />
-            <element signature="e#6622#6630#0" expanded="true" />
-            <element signature="method#getNewBookId#0;class#Library#0" expanded="false" />
-            <element signature="method#getNewMemberId#0;class#Library#0" expanded="false" />
-            <element signature="method#changeQuantity#0;class#Library#0" expanded="false" />
+            <element signature="method#saveChanges#0;class#Library#0" expanded="false" />
+            <element signature="e#7746#7752#0" expanded="true" />
+            <element signature="e#9961#9969#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -843,8 +827,6 @@
           <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
           <folding>
             <element signature="e#1132#1133#0" expanded="true" />
-            <element signature="e#1166#1167#0" expanded="true" />
-            <element signature="e#1201#1202#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -855,8 +837,8 @@
           <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#661#662#0" expanded="true" />
-            <element signature="e#694#695#0" expanded="true" />
+            <element signature="e#627#628#0" expanded="true" />
+            <element signature="e#660#661#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -870,11 +852,9 @@
             <element signature="method#seperateAuthors#0;class#Library#0" expanded="false" />
             <element signature="method#importMembersFile#0;class#Library#0" expanded="false" />
             <element signature="method#importLoansFile#0;class#Library#0" expanded="false" />
-            <element signature="e#6208#6214#0" expanded="true" />
-            <element signature="e#6622#6630#0" expanded="true" />
-            <element signature="method#getNewBookId#0;class#Library#0" expanded="false" />
-            <element signature="method#getNewMemberId#0;class#Library#0" expanded="false" />
-            <element signature="method#changeQuantity#0;class#Library#0" expanded="false" />
+            <element signature="method#saveChanges#0;class#Library#0" expanded="false" />
+            <element signature="e#7746#7752#0" expanded="true" />
+            <element signature="e#9961#9969#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -907,8 +887,6 @@
           <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
           <folding>
             <element signature="e#1132#1133#0" expanded="true" />
-            <element signature="e#1166#1167#0" expanded="true" />
-            <element signature="e#1201#1202#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -919,8 +897,8 @@
           <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#661#662#0" expanded="true" />
-            <element signature="e#694#695#0" expanded="true" />
+            <element signature="e#627#628#0" expanded="true" />
+            <element signature="e#660#661#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -934,11 +912,9 @@
             <element signature="method#seperateAuthors#0;class#Library#0" expanded="false" />
             <element signature="method#importMembersFile#0;class#Library#0" expanded="false" />
             <element signature="method#importLoansFile#0;class#Library#0" expanded="false" />
-            <element signature="e#6208#6214#0" expanded="true" />
-            <element signature="e#6622#6630#0" expanded="true" />
-            <element signature="method#getNewBookId#0;class#Library#0" expanded="false" />
-            <element signature="method#getNewMemberId#0;class#Library#0" expanded="false" />
-            <element signature="method#changeQuantity#0;class#Library#0" expanded="false" />
+            <element signature="method#saveChanges#0;class#Library#0" expanded="false" />
+            <element signature="e#7746#7752#0" expanded="true" />
+            <element signature="e#9961#9969#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -971,8 +947,6 @@
           <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
           <folding>
             <element signature="e#1132#1133#0" expanded="true" />
-            <element signature="e#1166#1167#0" expanded="true" />
-            <element signature="e#1201#1202#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -983,8 +957,8 @@
           <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#661#662#0" expanded="true" />
-            <element signature="e#694#695#0" expanded="true" />
+            <element signature="e#627#628#0" expanded="true" />
+            <element signature="e#660#661#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -998,11 +972,9 @@
             <element signature="method#seperateAuthors#0;class#Library#0" expanded="false" />
             <element signature="method#importMembersFile#0;class#Library#0" expanded="false" />
             <element signature="method#importLoansFile#0;class#Library#0" expanded="false" />
-            <element signature="e#6208#6214#0" expanded="true" />
-            <element signature="e#6622#6630#0" expanded="true" />
-            <element signature="method#getNewBookId#0;class#Library#0" expanded="false" />
-            <element signature="method#getNewMemberId#0;class#Library#0" expanded="false" />
-            <element signature="method#changeQuantity#0;class#Library#0" expanded="false" />
+            <element signature="method#saveChanges#0;class#Library#0" expanded="false" />
+            <element signature="e#7746#7752#0" expanded="true" />
+            <element signature="e#9961#9969#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1026,11 +998,9 @@
             <element signature="method#seperateAuthors#0;class#Library#0" expanded="false" />
             <element signature="method#importMembersFile#0;class#Library#0" expanded="false" />
             <element signature="method#importLoansFile#0;class#Library#0" expanded="false" />
-            <element signature="e#6208#6214#0" expanded="true" />
-            <element signature="e#6622#6630#0" expanded="true" />
-            <element signature="method#getNewBookId#0;class#Library#0" expanded="false" />
-            <element signature="method#getNewMemberId#0;class#Library#0" expanded="false" />
-            <element signature="method#changeQuantity#0;class#Library#0" expanded="false" />
+            <element signature="method#saveChanges#0;class#Library#0" expanded="false" />
+            <element signature="e#7746#7752#0" expanded="true" />
+            <element signature="e#9961#9969#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1102,18 +1072,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/RD/Book.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="49" column="44" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
-          <folding>
-            <element signature="e#1132#1133#0" expanded="true" />
-            <element signature="e#1166#1167#0" expanded="true" />
-            <element signature="e#1201#1202#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_102/src.zip!/java/util/Scanner.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25143">
@@ -1130,32 +1088,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/RD/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/com/RD/Member.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="179" column="8" selection-start-line="179" selection-start-column="8" selection-end-line="179" selection-end-column="31" />
+        <state relative-caret-position="453">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#627#628#0" expanded="true" />
+            <element signature="e#660#661#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/RD/Member.java">
+    <entry file="file://$PROJECT_DIR$/src/com/RD/Book.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
+        <state relative-caret-position="487">
+          <caret line="49" column="44" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
+          <folding>
+            <element signature="e#1132#1133#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/RD/Library.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="293" column="55" selection-start-line="293" selection-start-column="55" selection-end-line="293" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#661#662#0" expanded="true" />
-            <element signature="e#694#695#0" expanded="true" />
+            <element signature="method#seperateAuthors#0;class#Library#0" expanded="false" />
+            <element signature="method#importMembersFile#0;class#Library#0" expanded="false" />
+            <element signature="method#importLoansFile#0;class#Library#0" expanded="false" />
+            <element signature="method#saveChanges#0;class#Library#0" expanded="false" />
+            <element signature="e#7746#7752#0" expanded="true" />
+            <element signature="e#9961#9969#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/RD/Loan.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="19" column="37" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
+        <state relative-caret-position="283">
+          <caret line="17" column="29" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#523#524#0" expanded="true" />
@@ -1164,20 +1138,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/RD/Library.java">
+    <entry file="file://$PROJECT_DIR$/src/com/RD/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-834">
-          <caret line="192" column="62" selection-start-line="192" selection-start-column="62" selection-end-line="192" selection-end-column="62" />
+        <state relative-caret-position="351">
+          <caret line="92" column="41" selection-start-line="92" selection-start-column="41" selection-end-line="92" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#seperateAuthors#0;class#Library#0" expanded="false" />
-            <element signature="method#importMembersFile#0;class#Library#0" expanded="false" />
-            <element signature="method#importLoansFile#0;class#Library#0" expanded="false" />
-            <element signature="e#6208#6214#0" expanded="true" />
-            <element signature="e#6622#6630#0" expanded="true" />
-            <element signature="method#getNewBookId#0;class#Library#0" expanded="false" />
-            <element signature="method#getNewMemberId#0;class#Library#0" expanded="false" />
-            <element signature="method#changeQuantity#0;class#Library#0" expanded="false" />
           </folding>
         </state>
       </provider>

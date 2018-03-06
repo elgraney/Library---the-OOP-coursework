@@ -13,7 +13,7 @@ public class Member {
     private String firstName;
     private String secondName;
     private LocalDate dateJoin;
-    private ArrayList<Loan> loans;
+
 
     public Member(String id, String firstName, String secondName, LocalDate dateJoin){
         this.id = id;
@@ -32,17 +32,12 @@ public class Member {
     public String getId(){
         return id;
     }
-    public ArrayList<Loan> getLoans(){
-        return loans;
-    }
+
     public LocalDate getDateJoin(){
         return dateJoin;
     }
     public void setName(String firstName, String secondName){
        this.firstName = firstName;
         this.secondName = secondName;
-    }
-    public void setLoans(Loan newLoan){
-        loans.add(newLoan); //unsure if correct
     }
 }
