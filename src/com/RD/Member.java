@@ -9,13 +9,13 @@ import java.util.StringJoiner;
  * Created on 15/02/2018.
  */
 public class Member {
-    private String id;
+    private int id;
     private String firstName;
     private String secondName;
     private LocalDate dateJoin;
 
 
-    public Member(String id, String firstName, String secondName, LocalDate dateJoin){
+    public Member(int id, String firstName, String secondName, LocalDate dateJoin){
         this.id = id;
         this.firstName=firstName;
         this.secondName=secondName;
@@ -29,7 +29,7 @@ public class Member {
     public String getSecondName(){
         return secondName;
     }
-    public String getId(){
+    public int getId(){
         return id;
     }
 

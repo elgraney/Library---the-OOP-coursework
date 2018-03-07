@@ -9,14 +9,15 @@ import java.time.LocalTime;
 public class Loan {
     private String title;
     private LocalDate date;
-    private String bookId;
-    private String memberId;
+    private int bookId;
+    private int memberId;
+    private int bookLoanId;
     private LocalDate borrowDate;
 
-    public Loan(String title, String bookId, String memberId, LocalDate borrowDate){
-        this.title = title;
+    public Loan( int bookLoanId, int bookId, int memberId, LocalDate borrowDate){
         this.bookId = bookId;
         this.memberId = memberId;
+        this.bookLoanId = bookLoanId;
         this.borrowDate = borrowDate;
     }
 
@@ -29,21 +30,17 @@ public class Loan {
     public LocalDate getReturnDate(){
         return borrowDate.plusDays(5);
     }
-    public String getId(){
-        return bookId;
-    }
-    public String getMemberId(){
+    public int getMemberId(){
         return memberId;
     }
     public LocalDate getBorrowDate(){
         return borrowDate;
     }
-    public String getBookId(){
+    public int getBookId(){
         return bookId;
     }
-
-    public String getID(){
-        return memberId;
+    public void setTitle(String title) {this.title = title;}
+    public int getId(){return bookLoanId;
     }
 
 }

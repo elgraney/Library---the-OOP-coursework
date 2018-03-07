@@ -8,12 +8,12 @@ import java.time.Year;
 public class Book {
     private String title;
     private String[] authors;
-    private String id;
+    private int id;
     private int year;
     private int totalQty;
     private int availibleQty;
 
-    public Book(String id, String title, String[] authors, int year, int qty){
+    public Book(int id, String title, String[] authors, int year, int qty){
         this.id = id;
         this.title = title;
         this.authors = authors;
@@ -27,7 +27,7 @@ public class Book {
     public String getTitle(){
         return title;
     }
-    public String getId(){
+    public int getId(){
         return id;
     }
     public int getYear(){
