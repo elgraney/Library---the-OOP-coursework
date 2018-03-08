@@ -1,31 +1,42 @@
 package com.RD;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
-
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
-import java.time.temporal.ChronoUnit;
-
 import static java.time.temporal.ChronoUnit.DAYS;
-import static jdk.nashorn.internal.objects.NativeMath.round;
+
+/**
+ * Creates a simulation of a library containing a list of library books, library
+ * members, and current book loans. Additionally contains all methods related to
+ * handling books, members and loans in the general case.
+ */
 
 
 public class Library {
 
+    /**
+     * The ArrayList containing all books known to the library
+     */
+    private ArrayList<Book> bookList = new ArrayList<Book>();
+    /**
+     * The ArrayList containing all members known to the library
+     */
+    private ArrayList<Member> memberList = new ArrayList<Member>();
+    /**
+     * The ArrayList containing all loans currently in place
+     */
+    private ArrayList<Loan> loanList = new ArrayList<Loan>();
 
-    private ArrayList<Book> bookList = new ArrayList();
-    private ArrayList<Member> memberList = new ArrayList();
-    private ArrayList<Loan> loanList = new ArrayList();
 
-
+    /**
+     * Initialises the library with all books, members and loans imported from test files.
+     * Following this adds additional data to all loans, books and members, through further function calls.
+     *
+     * @param  file1  the file containing all books
+     * @param  file2  the file containing all members
+     * @param  file3  the file containing all loans
+     */
     public Library(String file1, String file2, String file3) {
         try {
             importBooksFile(file1);
@@ -40,12 +51,17 @@ public class Library {
         }
     }
 
+    /**
+     * Checks every loan and totals the number of loans belonging to each known member.
+     * saves said total within each relevant Member object
+     */
     private void countLoansPerMember(){
         for (Loan loan : loanList) {
             for (Member member : memberList) {
                 if (loan.getMemberId() == member.getId()) {
                     member.addBorrowedBooks(1);
                     if (member.getBorrowedBooks()> 5) {
+                        //should never happen
                         throw new RuntimeException("Error in text files: More borrowed books than should be allowed.");
                     }
                 }
@@ -53,6 +69,10 @@ public class Library {
         }
     }
 
+    /**
+     * Cross references the book ID within a Loan object with the book ID within a Book object.
+     * Uses the found Book object to pass the title of the book to the Loan, saving it there.
+     */
     private void nameLoans(){
         for (Loan loan : loanList){
             for (Book book : bookList){
@@ -62,6 +82,11 @@ public class Library {
             }
         }
     }
+
+    /**
+     * Counts the number of loans of each type of book.
+     * Deducts the number of loans from the total available copies of each relevant book.
+     */
     private void calculateAvailableCopies() {
         for (Book book : bookList) {
             int available = book.getTotalQty();
@@ -74,10 +99,15 @@ public class Library {
                 }
             }
             book.changeAvailableQty(available);
-
         }
     }
 
+    /**
+     *Handles the reading of the book.txt file.
+     *Creates a new Book object for each new book, storing all metadata within it.
+     *@throws IOException if file can't be accessed for any reason
+     *@param path the path to the txt file
+     */
     private void importBooksFile(String path) throws IOException {
         BufferedReader br = null;
 
@@ -92,12 +122,26 @@ public class Library {
         br.close();
     }
 
+    /**
+     * Authors are stored as a single string separated by ':'
+     * This method break that string down into an array of substrings
+     * each substring is a full author name
+     *
+     * @param authorString the single string containing all author names
+     * @return String array of author names
+     */
     private String[] seperateAuthors(String authorString) {
         String[] authors = authorString.split(":");
         return authors;
     }
 
 
+    /**
+     * Handles the reading of the members.txt file.
+     * Creates a new Member object for each new member, storing all metadata within it.
+     *@throws IOException if file can't be accessed for any reason
+     * @param path the path to the txt file
+     */
     private void importMembersFile(String path) throws IOException {
         BufferedReader br = null;
 
@@ -113,6 +157,12 @@ public class Library {
         br.close();
     }
 
+    /**
+     *Handles the reading of the loans.txt file.
+     *Creates a new Loan object for each new loan, storing all metadata within it.
+     *@throws IOException if file can't be accessed for any reason
+     *@param path the path to the txt file
+     */
     private void importLoansFile(String path) throws IOException {
         BufferedReader br = null;
 
@@ -128,8 +178,9 @@ public class Library {
         br.close();
     }
 
-
-
+    /**
+     * loops through every book in the library and calls showBook to display its data.
+     */
     public void showAllBooks() {
         System.out.println("Displaying all books:");
         for (int i = 0; i < bookList.size(); i++) {
@@ -137,11 +188,18 @@ public class Library {
         }
     }
 
+    /**
+     * takes a book and prints its title, id and authors to console.
+     * @param book the book object to display
+     */
     private void showBook(Book book) {
         System.out.printf("-Title: %s, ID: %s, Authors: %s\n",
                 book.getTitle(), book.getId(), (String.join(", ", (book.getAuthors()))));
     }
 
+    /**
+     * loops through every member in the library and calls showMember to display its data.
+     */
     public void showAllMembers() {
         System.out.println("Displaying all members:");
         for (int i = 0; i < memberList.size(); i++) {
@@ -149,11 +207,18 @@ public class Library {
         }
     }
 
+    /**
+     * takes a member and prints its name, id and join date to console.
+     * @param member the member object to display
+     */
     private void showMember(Member member) {
         System.out.printf("-Name: %s, ID: %s, Join Date: %s\n",
                 member.getFirstName() + " " + member.getSecondName(), member.getId(), member.getDateJoin());
     }
 
+    /**
+     * loops through every loan in the library and calls showBookLoan to display its data.
+     */
     public void showAllBookLoans() {
         System.out.println("Displaying all loans:");
         for (int i = 0; i < loanList.size(); i++) {
@@ -161,6 +226,11 @@ public class Library {
         }
     }
 
+    /**
+     * takes a loan and prints the title of the book, loan id, book id, member id,
+     * borrow date and due date to console.
+     * @param loan the loan object to display
+     */
     private void showBookLoan(Loan loan) {
         System.out.printf("-Title: %s, Loan ID: %s, Book ID: %s, Member ID: %s, Borrow Date: %s, Due Date: %s\n",
                 loan.getTitle(), loan.getId(),loan.getBookId(), loan.getMemberId(), loan.getBorrowDate(), loan.getReturnDate());
