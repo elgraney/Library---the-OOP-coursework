@@ -348,7 +348,7 @@ public class Library {
     public String inputString(String message) {
         System.out.println(message);
         Scanner in = new Scanner(System.in);
-        String name = in.next();
+        String name = in.nextLine();
         return name;
     }
 
@@ -410,10 +410,25 @@ public class Library {
         //inputs being book title, author first name, author second name
         //use input methods below
         String name = inputString("Please input the name of the book:");
-        String firstName = inputString("Please input the author's first name:");
-        String secondName = inputString("Please input the author's second name");
+        boolean invalid = true;
+        String firstName ="";
+        String secondName= "";
+        do {
+            String fullName = inputString("Please input the author's full name");
+            String[] names = fullName.split(" ");
+            try{
+                firstName = names[0];
+                secondName = names[1];
+                invalid = false;
+            }
+            catch (IndexOutOfBoundsException e){
+                System.out.println("Please be sure to input both first and second names separated by a space.");
+            }
+        }while(invalid);
         borrowBook(name, firstName, secondName);
     }
+
+
     public void borrowBook(String name, String authorFirstName, String authorSecondName) {
 
         //getting additional inputs
@@ -491,8 +506,9 @@ public class Library {
                 isYesOrNoInput = true;
                 if ((inCh == 'y') || (inCh == 'Y')) {
                     if (fullSearchResults.size() > 0 && fullSearchResults.get(0).getTotalQty() > 0) {
-
-                        loanList.add(new Loan( book.getId(), member.getId(), getNewBookLoanId(),LocalDate.now()));
+                        int id =getNewBookLoanId();
+                        loanList.add(new Loan( book.getId(), member.getId(), id,LocalDate.now()));
+                        System.out.printf("Created new loan with Id: %s",id);
 
                     } else if (fullSearchResults.get(0).getTotalQty() < 1) {
                         System.out.println("There are no available copies of the book '" + book.getTitle() + "'.");
@@ -582,10 +598,8 @@ public class Library {
                         isYesOrNoInput = false;
                     }
                 } while (!isYesOrNoInput);
-
             }
         }while(!returnComplete);
-
     }
 
     public void addNewBook(){
@@ -595,6 +609,7 @@ public class Library {
         int quantity = inputInt("Please enter the number of copies of this book");
         addNewBook(name,authors,year,quantity);
     }
+
     public void addNewBook(String name, String[] authors, int year, int quantity) {
         ArrayList<Book> searchResults = getBookSearchResults(name);
         if (searchResults.size() != 0 && searchResults.size() < 2) {
