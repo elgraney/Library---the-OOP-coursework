@@ -115,7 +115,7 @@ public class Main {
         do {
             isValidInput = true;
             inChar = getUserInput();
-            /*switch (inChar){
+            switch (inChar){
                 case 's': case 'S'://search for one book
                     lib.searchBook();
                     break;
@@ -142,7 +142,7 @@ public class Main {
                 default:
                     isValidInput = false;
             }
-            */
+
             if (isValidInput){
                 moreRequirement = anyOtherRequirement();
             }

@@ -13,6 +13,7 @@ public class Member {
     private String firstName;
     private String secondName;
     private LocalDate dateJoin;
+    private int borrowedBooks;
 
 
     public Member(int id, String firstName, String secondName, LocalDate dateJoin){
@@ -20,9 +21,15 @@ public class Member {
         this.firstName=firstName;
         this.secondName=secondName;
         this.dateJoin = dateJoin;
+        this.borrowedBooks=0;
 
     }
-
+    public void addBorrowedBooks(int qty){
+        this.borrowedBooks = borrowedBooks+qty;
+    }
+    public int getBorrowedBooks(){
+        return borrowedBooks;
+    }
     public String getFirstName(){
         return firstName;
     }

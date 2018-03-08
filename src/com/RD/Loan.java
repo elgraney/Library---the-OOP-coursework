@@ -28,7 +28,7 @@ public class Loan {
         return LocalDate.now();
     }
     public LocalDate getReturnDate(){
-        return borrowDate.plusDays(5);
+        return borrowDate.plusDays(30);
     }
     public int getMemberId(){
         return memberId;

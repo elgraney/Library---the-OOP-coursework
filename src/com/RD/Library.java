@@ -33,13 +33,26 @@ public class Library {
             importLoansFile(file3);
             nameLoans();
             calculateAvailableCopies();
+            countLoansPerMember();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
+
+    private void countLoansPerMember(){
+        for (Loan loan : loanList) {
+            for (Member member : memberList) {
+                if (loan.getMemberId() == member.getId()) {
+                    member.addBorrowedBooks(1);
+                    if (member.getBorrowedBooks()> 5) {
+                        throw new RuntimeException("Error in text files: More borrowed books than should be allowed.");
+                    }
+                }
+            }
+        }
+    }
+
     private void nameLoans(){
         for (Loan loan : loanList){
             for (Book book : bookList){
@@ -146,10 +159,8 @@ public class Library {
     }
 
     private void showBook(Book book) {
-        System.out.println("Title: " + book.getTitle());
-        System.out.println("ID: " + book.getId());
-        System.out.println("Author(s): " + String.join(", ", (book.getAuthors())));
-
+        System.out.printf("Title: %s, ID: %s, Authors: &s\n",
+                book.getTitle(), book.getId(), String.join(", ", (book.getAuthors())));
     }
 
     public void showAllMembers() {
@@ -160,9 +171,10 @@ public class Library {
     }
 
     private void showMember(Member member) {
-        System.out.println("Name: " + member.getFirstName() + " " + member.getSecondName());
-        System.out.println("ID: " + member.getId());
-        //etc
+        System.out.printf("Name: %s, ID: &s, Join Date: %s\n",
+                member.getFirstName() + " " + member.getSecondName(), member.getId(), member.getDateJoin());
+
+
     }
 
     public void showAllBookLoans() {
@@ -173,9 +185,8 @@ public class Library {
     }
 
     private void showBookLoan(Loan loan) {
-        System.out.println("Title: " + loan.getTitle());
-        System.out.println("ID: " + loan.getId());
-        //etc
+        System.out.printf("Title: %s, Loan ID: %s, Book ID: %s, Member ID: %s, Borrow Date: %s, Due Date: %s\n",
+                loan.getTitle(), loan.getId(),loan.getBookId(), loan.getMemberId(), loan.getBorrowDate(), loan.getReturnDate());
     }
 
 
@@ -271,7 +282,7 @@ public class Library {
                         loans.add(loan);
                     }
                 }
-                System.out.printf("You currently have %d borrowed books", loans.size());
+                System.out.printf("You currently have %d borrowed books\n", loans.size());
                 for (Loan loan : loans) {
                     System.out.printf("Title: %s, Book Id: %s, Borrow Date: %s, Return Date: %s\n",
                             loan.getTitle(), loan.getBookId(), loan.getBorrowDate(), loan.getReturnDate());
@@ -382,12 +393,17 @@ public class Library {
             if (member.size() == 0) {
                 break;
             }
+
             System.out.println("Found the following member");
             showMember(member.get(0));
-            System.out.println("is this You? (Y/N)");
+            System.out.println("Is this You? (Y/N)");
             char inCh = in.next().charAt(0);
             isYesOrNoInput = true;
             if ((inCh == 'y') || (inCh == 'Y')) {
+                if (member.get(0).getBorrowedBooks() >=5){
+                    System.out.println("You have too many borrowed books already. Return some before borrowing more.");
+                    break;
+                }
                 continueBorrow = true;
                 repeatInput = false;
             } else if ((inCh == 'n') || (inCh == 'N')) {
@@ -538,6 +554,9 @@ public class Library {
 
     }
 
+    public void addNewBook(){
+        //inputs
+    }
     public void addNewBook(String name, String[] authors, int year, int quantity) {
         ArrayList<Book> searchResults = getBookSearchResults(name);
         if (searchResults.size() != 0 && searchResults.size() < 2) {
@@ -550,6 +569,9 @@ public class Library {
         }
     }
 
+    public void addNewMember(){
+        //inputs
+    }
     public void addNewMember(String firstName, String secondName, LocalDate date) {
         memberList.add(new Member(getNewMemberId(), firstName, secondName, date));
     }
@@ -592,7 +614,9 @@ public class Library {
         return newId;
     }
 
-
+    public void changeQuantity(){
+        //input
+    }
     public void changeQuantity(String name, int quantity) {
         Book book = getBookSearchResults(name).get(0);
         if ((book.getAvailableQty() + quantity) >= 0) {
