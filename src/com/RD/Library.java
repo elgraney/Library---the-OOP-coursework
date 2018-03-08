@@ -88,13 +88,6 @@ public class Library {
         while ((line = br.readLine()) != null) {
             String[] values = line.split(",");
             bookList.add(new Book(Integer.parseInt(values[0]), values[1], seperateAuthors(values[2]), Integer.parseInt(values[3]), Integer.parseInt(values[4])));
-            //testing
-            System.out.println(values[0]);//id
-            System.out.println(values[1]);//title
-            System.out.println(values[2]);//authors
-            System.out.println(values[3]);//year
-            System.out.println(values[4]);//numberCopies
-            System.out.println("break");
         }
         br.close();
     }
@@ -116,13 +109,6 @@ public class Library {
 
             String[] values = line.split(",");
             memberList.add(new Member(Integer.parseInt(values[0]), values[1], values[2], LocalDate.parse(values[3])));
-
-            //testing
-            System.out.println(values[0]);//id
-            System.out.println(values[1]);//fname
-            System.out.println(values[2]);//sname
-            System.out.println(values[3]);//date
-            System.out.println("break");
         }
         br.close();
     }
@@ -137,60 +123,50 @@ public class Library {
         while ((line = br.readLine()) != null) {
 
             String[] values = line.split(",");
-
             loanList.add(new Loan(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]) , LocalDate.parse(values[3])));
-            //testing
-            System.out.println(values[0]);//id
-            System.out.println(values[1]);//bookid
-            System.out.println(values[2]);//memberid
-            System.out.println(values[3]);//date
-            System.out.println("break");
         }
         br.close();
     }
 
 
-    //change void
+
     public void showAllBooks() {
+        System.out.println("Displaying all books:");
         for (int i = 0; i < bookList.size(); i++) {
-            System.out.println("Next Book:");
             showBook(bookList.get(i));
         }
     }
 
     private void showBook(Book book) {
-        System.out.printf("Title: %s, ID: %s, Authors: &s\n",
-                book.getTitle(), book.getId(), String.join(", ", (book.getAuthors())));
+        System.out.printf("-Title: %s, ID: %s, Authors: %s\n",
+                book.getTitle(), book.getId(), (String.join(", ", (book.getAuthors()))));
     }
 
     public void showAllMembers() {
+        System.out.println("Displaying all members:");
         for (int i = 0; i < memberList.size(); i++) {
-            System.out.println("Next Member:");
             showMember(memberList.get(i));
         }
     }
 
     private void showMember(Member member) {
-        System.out.printf("Name: %s, ID: &s, Join Date: %s\n",
+        System.out.printf("-Name: %s, ID: %s, Join Date: %s\n",
                 member.getFirstName() + " " + member.getSecondName(), member.getId(), member.getDateJoin());
-
-
     }
 
     public void showAllBookLoans() {
-        for (int i = 0; i < memberList.size(); i++) {
-            System.out.println("Next Member:");
+        System.out.println("Displaying all loans:");
+        for (int i = 0; i < loanList.size(); i++) {
             showBookLoan(loanList.get(i));
         }
     }
 
     private void showBookLoan(Loan loan) {
-        System.out.printf("Title: %s, Loan ID: %s, Book ID: %s, Member ID: %s, Borrow Date: %s, Due Date: %s\n",
+        System.out.printf("-Title: %s, Loan ID: %s, Book ID: %s, Member ID: %s, Borrow Date: %s, Due Date: %s\n",
                 loan.getTitle(), loan.getId(),loan.getBookId(), loan.getMemberId(), loan.getBorrowDate(), loan.getReturnDate());
     }
 
-
-    //needs get methods to work
+    //REPLACE PATHS WITH FILE1, 2, 3
     public void saveChanges(String file1, String file2, String file3) {
         BufferedWriter writer = null;
         try {
@@ -230,7 +206,7 @@ public class Library {
 
 
     public void searchBook() {
-        System.out.println("***PLACEHOLDER FOR USER INPUT***");
+        searchBook(inputString("Please enter the name of the book:"));
     }
 
     public void searchBook(String name) {
@@ -240,8 +216,8 @@ public class Library {
         if (searchResults.size() > 0) {
             for (int i = 0; i < searchResults.size(); i++) {
                 Book book = searchResults.get(i);
-                System.out.printf("Title: %s, Id: %s, Total copies: %s, Available copies: %s\n",
-                        book.getTitle(), book.getId(), book.getTotalQty(), book.getAvailableQty());
+                System.out.printf("Title: %s, Id: %s, Authors: %s, Total copies: %s, Available copies: %s\n",
+                        book.getTitle(), book.getId(),String.join(", ", (book.getAuthors())) , book.getTotalQty(), book.getAvailableQty());
             }
         } else {
             System.out.println("No matches found");
@@ -254,7 +230,6 @@ public class Library {
         for (int i = 0; i < bookList.size(); i++) {
             Book book = bookList.get(i);
             if (book.getTitle().toLowerCase().contains(name.toLowerCase())) {
-                System.out.println(book.getTitle());
                 searchResults.add(book);
             }
         }
@@ -263,7 +238,23 @@ public class Library {
 
 
     public void searchMember() {
-        System.out.println("***PLACEHOLDER FOR USER INPUT***");
+        boolean invalid = true;
+        String firstName ="";
+        String secondName= "";
+        do {
+            String fullName = inputString("Please input the member's full name");
+            String[] names = fullName.split(" ");
+            try{
+                firstName = names[0];
+                secondName = names[1];
+                invalid = false;
+            }
+            catch (IndexOutOfBoundsException e){
+                System.out.println("Please be sure to input both first and second names separated by a space.");
+            }
+        }while(invalid);
+        searchMember(firstName, secondName);
+
     }
 
     public void searchMember(String firstName, String secondName) {
@@ -290,9 +281,7 @@ public class Library {
                         System.out.printf("This book is overdue and has accumulated a fine of £%.2f\n",
                                 calcFineValue(loan.getBorrowDate()));
                     }
-
                 }
-
             }
         } else {
             System.out.println("No matches found");
@@ -303,7 +292,7 @@ public class Library {
         ArrayList<Member> searchResults = new ArrayList<Member>();
         for (int i = 0; i < memberList.size(); i++) {
             Member member = memberList.get(i);
-            if (member.getFirstName().toLowerCase().contains(firstName.toLowerCase()) ||
+            if (member.getFirstName().toLowerCase().contains(firstName.toLowerCase()) &&
                     member.getSecondName().toLowerCase().contains(secondName.toLowerCase())) {
                 searchResults.add(member);
             }
@@ -321,6 +310,7 @@ public class Library {
         }
         return null;
     }
+
 
     private ArrayList<Member> inputMemberName() {
         Boolean inputPassed = false;
@@ -355,31 +345,75 @@ public class Library {
         return member;
     }
 
+    public String inputString(String message) {
+        System.out.println(message);
+        Scanner in = new Scanner(System.in);
+        String name = in.next();
+        return name;
+    }
 
-    //change firstName, secondName to just one big name
+    private int inputInt(String message) {
+        boolean valid = false;
+        int intId = 0;
+        do{
+            System.out.println(message);
+            Scanner in = new Scanner(System.in);
+            String id = in.next();
+
+            try {
+                intId = Integer.parseInt(id);
+                valid =true;
+            }catch(NumberFormatException e){
+                System.out.println("The input must be entirely numerical; non numerical characters are not allowed.");
+            }
+        }while (!valid);
+        return intId;
+    }
+
+    private String[] inputAuthors(){
+        boolean continueInput = true;
+        boolean valid = false;
+        Scanner in = new Scanner(System.in);
+        ArrayList<String> authors = new ArrayList<String>();
+        do{
+            do {
+                System.out.println("Please enter the name of the author");
+                String author = in.nextLine();
+                if (author.contains(",")) {
+                    System.out.println("Please input one author at a time");
+                } else {
+                    authors.add(author);
+                    valid = true;
+                }
+            }while (!valid);
+            boolean isYesOrNoInput;
+            do {
+                char inCh = in.next().charAt(0);
+                isYesOrNoInput = true;
+                if ((inCh == 'y') || (inCh == 'Y')) {
+                    continueInput = true;
+                } else if ((inCh == 'n') || (inCh == 'N')) {
+                    continueInput = false;
+                    System.out.println("Moving on...");
+                } else {
+                    System.out.println("******** Wrong input. Try again.");
+                    isYesOrNoInput = false;
+                }
+            } while (!isYesOrNoInput);
+        }while (continueInput);
+        String[] authorsArray = authors.toArray(new String[0]);
+        return authorsArray;
+    }
+
     public void borrowBook() {
         //get inputs, then pass other borrowBook()
         //inputs being book title, author first name, author second name
         //use input methods below
-        String name = inputBookName();
-        String firstName = inputAuthorFirstName();
-        String secondName = inputAuthorSecondName();
-
+        String name = inputString("Please input the name of the book:");
+        String firstName = inputString("Please input the author's first name:");
+        String secondName = inputString("Please input the author's second name");
+        borrowBook(name, firstName, secondName);
     }
-
-    public String inputBookName() {
-        return "Placeholder";
-    }
-
-    public String inputAuthorFirstName() {
-        return "Placeholder";
-    }
-
-    private String inputAuthorSecondName() {
-        return "Placeholder";
-    }
-
-
     public void borrowBook(String name, String authorFirstName, String authorSecondName) {
 
         //getting additional inputs
@@ -486,9 +520,11 @@ public class Library {
             char inCh = in.next().charAt(0);
             isYesOrNoInput = true;
             if ((inCh == 'y') || (inCh == 'Y')) {
-                //ADD BORROW BOOK
-                //PLACEHOLDER
-                borrowOperation(inputBookName(), inputAuthorFirstName(), inputAuthorSecondName(), member);//VERY VERY PLACEHOLDER
+
+                borrowOperation(inputString("Please enter the name of the book:"),
+                        inputString("Please enter the first name of the author:" ),
+                        inputString("Please enter the second name of the author:"),
+                        member);
 
             } else if ((inCh == 'n') || (inCh == 'N')) {
                 System.out.println("Returning to menu...");
@@ -500,62 +536,64 @@ public class Library {
     }
 
     public void returnBook() {
-        //user input bit
-        inputLoanId();
+        returnBook(inputInt("Please input the loan ID:"));
     }
 
-    private int inputLoanId() {
-        //do input here
-        System.out.println("***LOAN ID INPUT PLACEHOLDER***");
-        return Integer.parseInt("9999");//placeholder
-    }
+
 
     public void returnBook(int id) {
         Scanner in = new Scanner(System.in);
         Boolean isYesOrNoInput;
+        Boolean returnComplete = false;
+        do {
+            Loan loan = getLoanSearchResult(id);
+            if (loan == null) {
+                System.out.println("No matching loans found.");
+                System.out.println("Would you like to re-enter the ID? (Y/N)");
+                do {
+                    char inCh = in.next().charAt(0);
+                    isYesOrNoInput = true;
+                    if ((inCh == 'y') || (inCh == 'Y')) {
+                        id = inputInt("Please input the loan ID:");
+                    } else if ((inCh == 'n') || (inCh == 'N')) {
+                        System.out.println("Returning to menu...");
+                        return;
+                    } else {
+                        System.out.println("******** Wrong input. Try again.");
+                        isYesOrNoInput = false;
+                    }
+                } while (!isYesOrNoInput);
+            } else {
+                System.out.printf("You are returning '%s', is this correct? (Y/N)\n", loan.getTitle());
+                do {
+                    char inCh = in.next().charAt(0);
+                    isYesOrNoInput = true;
+                    if ((inCh == 'y') || (inCh == 'Y')) {
+                        handleFine(loan.getBorrowDate());
+                        Book book = getBookSearchResults(loan.getTitle()).get(0);
+                        book.changeAvailableQty(1);
+                        loanList.remove(loan);
+                        returnComplete = true;
+                    } else if ((inCh == 'n') || (inCh == 'N')) {
+                        System.out.println("Cancelling and returning to menu...");
+                        return;
+                    } else {
+                        System.out.println("******** Wrong input. Try again.");
+                        isYesOrNoInput = false;
+                    }
+                } while (!isYesOrNoInput);
 
-        Loan loan = getLoanSearchResult(id);
-        if (loan == null) {
-            System.out.println("No matching loans found.");
-            System.out.println("Would you like to re-enter your name? (Y/N)");
-            do {
-                char inCh = in.next().charAt(0);
-                isYesOrNoInput = true;
-                if ((inCh == 'y') || (inCh == 'Y')) {
-                    id = inputLoanId();
-                } else if ((inCh == 'n') || (inCh == 'N')) {
-                    System.out.println("Returning to menu...");
-                    return;
-                } else {
-                    System.out.println("******** Wrong input. Try again.");
-                    isYesOrNoInput = false;
-                }
-            } while (!isYesOrNoInput);
-        } else {
-            System.out.printf("You are returning '%s', is this correct? (Y/N)\n", loan.getTitle());
-            do {
-                char inCh = in.next().charAt(0);
-                isYesOrNoInput = true;
-                if ((inCh == 'y') || (inCh == 'Y')) {
-                    handleFine(loan.getBorrowDate());
-                    Book book = getBookSearchResults(loan.getTitle()).get(0);
-                    book.changeAvailableQty(1);
-                    loanList.remove(loan);
-                } else if ((inCh == 'n') || (inCh == 'N')) {
-                    System.out.println("Cancelling and returning to menu...");
-                    return;
-                } else {
-                    System.out.println("******** Wrong input. Try again.");
-                    isYesOrNoInput = false;
-                }
-            } while (!isYesOrNoInput);
-
-        }
+            }
+        }while(!returnComplete);
 
     }
 
     public void addNewBook(){
-        //inputs
+        String name = inputString("Please input the book name:");
+        String[] authors = inputAuthors();
+        int year = inputInt("Please enter the year the book was published:");
+        int quantity = inputInt("Please enter the number of copies of this book");
+        addNewBook(name,authors,year,quantity);
     }
     public void addNewBook(String name, String[] authors, int year, int quantity) {
         ArrayList<Book> searchResults = getBookSearchResults(name);
@@ -570,8 +608,26 @@ public class Library {
     }
 
     public void addNewMember(){
-        //inputs
+        boolean invalid = true;
+        String firstName ="";
+        String secondName= "";
+        do {
+            String fullName = inputString("Please input the new member's full name");
+            String[] names = fullName.split(" ");
+            try{
+                firstName = names[0];
+                secondName = names[1];
+                invalid = false;
+            }
+            catch (IndexOutOfBoundsException e){
+                System.out.println("Please be sure to input both first and second names separated by a space.");
+            }
+        }while(invalid);
+
+        addNewMember(firstName, secondName, LocalDate.now());
     }
+
+
     public void addNewMember(String firstName, String secondName, LocalDate date) {
         memberList.add(new Member(getNewMemberId(), firstName, secondName, date));
     }
@@ -615,16 +671,25 @@ public class Library {
     }
 
     public void changeQuantity(){
-        //input
+        changeQuantity( inputString("Please input the name of the book:"),
+                inputInt("Please input the number of copies to add or remove (remove designated by '-' sign)"));
     }
     public void changeQuantity(String name, int quantity) {
-        Book book = getBookSearchResults(name).get(0);
+
+        Book book;
+        try {
+            book = getBookSearchResults(name).get(0);
+        }
+        catch(IndexOutOfBoundsException e){
+            System.out.println("Search returned no matches, returning to menu...");
+            return;
+        }
+
         if ((book.getAvailableQty() + quantity) >= 0) {
             book.changeAvailableQty(quantity);
         } else {
             System.out.println("There are not enough available books of that name to take that many.");
         }
-
     }
 
 
