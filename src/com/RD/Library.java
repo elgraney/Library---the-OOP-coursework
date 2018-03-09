@@ -236,7 +236,13 @@ public class Library {
                 loan.getTitle(), loan.getId(),loan.getBookId(), loan.getMemberId(), loan.getBorrowDate(), loan.getReturnDate());
     }
 
-    //REPLACE PATHS WITH FILE1, 2, 3
+    /**
+     * Saves all data within each of the 3 different library ArrayLists to a text file each
+     *
+     * @param file1 the file path for the books data
+     * @param file2 the file path for the members data
+     * @param file3 the file path for the loans data
+     */
     public void saveChanges(String file1, String file2, String file3) {
         BufferedWriter writer = null;
         try {
@@ -275,10 +281,18 @@ public class Library {
     }
 
 
+    /**
+     *Gets user input to pass to the alternative searchBook method
+     */
     public void searchBook() {
         searchBook(inputString("Please enter the name of the book:"));
     }
 
+    /**
+     * gets search results then displays extended data about each result
+     * data includes Title, ID, Authors, Totatl copies and Available copies
+     * @param name the title of the book
+     */
     public void searchBook(String name) {
         //this function specifically prints the search results found in getBookSearchResults
         ArrayList<Book> searchResults = getBookSearchResults(name);
@@ -294,6 +308,12 @@ public class Library {
         }
     }
 
+    /**
+     * Iterates through every book in booklist checking if each of their titles contains the string 'name'.
+     * If it does, add that book to an ArrayList of search results.
+     * @param name the title of the book
+     * @return the ArrayList of matching books
+     */
     private ArrayList<Book> getBookSearchResults(String name) {
         //actual seach function here. returns arrayList of search results
         ArrayList<Book> searchResults = new ArrayList<Book>();
@@ -306,7 +326,9 @@ public class Library {
         return searchResults;
     }
 
-
+    /**
+     *Gets user input to pass to the alternative searchMember method
+     */
     public void searchMember() {
         boolean invalid = true;
         String firstName ="";
@@ -327,8 +349,18 @@ public class Library {
 
     }
 
+    /**
+     * Gets search results then displays extended data about each result.
+     * Data includes First name, Second name, ID, and Join date.
+     * Additionally, the number of loans under the members are found.
+     * Data about these loans are then displayed.
+     * This includes Book title, Book ID, Loan ID Borrow date and Return date
+     * as well as any relevant fine warnings
+     * @param firstName the first name of the member
+     * @param secondName the second name of the member
+     */
     public void searchMember(String firstName, String secondName) {
-        //this function specifically prints the search results found in getBookSearchResults
+
         ArrayList<Member> searchResults = getMemberSearchResults(firstName, secondName);
         System.out.println("Search Results:");
         if (searchResults.size() > 0) {
@@ -345,8 +377,8 @@ public class Library {
                 }
                 System.out.printf("You currently have %d borrowed books\n", loans.size());
                 for (Loan loan : loans) {
-                    System.out.printf("Title: %s, Book Id: %s, Borrow Date: %s, Return Date: %s\n",
-                            loan.getTitle(), loan.getBookId(), loan.getBorrowDate(), loan.getReturnDate());
+                    System.out.printf("Title: %s, Book ID: %s, Loan ID: %s, Borrow Date: %s, Return Date: %s\n",
+                            loan.getTitle(), loan.getBookId(), loan.getId(), loan.getBorrowDate(), loan.getReturnDate());
                     if (checkfine(loan.getBorrowDate())) {
                         System.out.printf("This book is overdue and has accumulated a fine of £%.2f\n",
                                 calcFineValue(loan.getBorrowDate()));
@@ -358,6 +390,14 @@ public class Library {
         }
     }
 
+    /**
+     * Iterates through every member in memberList checking if each of their titles contains a
+     * substring of both the first and second name
+     * If it does, add that member to an ArrayList of search results.
+     * @param firstName the first name of the member
+     * @param secondName the second name of the member
+     * @return ArrayList of matching members
+     */
     public ArrayList<Member> getMemberSearchResults(String firstName, String secondName) {
         ArrayList<Member> searchResults = new ArrayList<Member>();
         for (int i = 0; i < memberList.size(); i++) {
@@ -369,6 +409,13 @@ public class Library {
         }
         return searchResults;
     }
+    /**
+     * Iterates through every member in memberList checking if each of their titles contains a
+     * substring of both the first and second name
+     * If it does, add that member to an ArrayList of search results.
+     * @param id the unique ID of the loan
+     * @return a matching loan if a match is found, null if no matching loan is found
+     */
 
     public Loan getLoanSearchResult(int id) {
 
@@ -381,6 +428,11 @@ public class Library {
         return null;
     }
 
+    /**
+     * Gets user input to try and find an existing member.
+     * If no matches are found, allows input to be retried
+     * @return ArrayList of matching members
+     */
 
     private ArrayList<Member> inputMemberName() {
         Boolean inputPassed = false;
@@ -415,13 +467,23 @@ public class Library {
         return member;
     }
 
+    /**
+     * Prompts user for any sort of simple string input (book title, member name, etc).
+     * @param message a string that is displayed to the user (eg 'please enter the book title:')
+     * @return the string user input
+     */
     public String inputString(String message) {
         System.out.println(message);
         Scanner in = new Scanner(System.in);
-        String name = in.nextLine();
-        return name;
+        String string = in.nextLine();
+        return string;
     }
-
+    /**
+     * Prompts user for any sort of simple int input (book id, quantity, etc.
+     * Checks input is integer
+     * @param message a string that is displayed to the user (eg 'please enter the book ID:')
+     * @return the int of the user input
+     */
     private int inputInt(String message) {
         boolean valid = false;
         int intId = 0;
@@ -440,12 +502,17 @@ public class Library {
         return intId;
     }
 
+    /**
+     * Asks the user to input author names.
+     * Allows multiple authors to be entered one after the other
+     * @return an array of author names that the user has entered
+     */
     private String[] inputAuthors(){
         boolean continueInput = true;
         boolean valid = false;
-        Scanner in = new Scanner(System.in);
         ArrayList<String> authors = new ArrayList<String>();
         do{
+            Scanner in = new Scanner(System.in);
             do {
                 System.out.println("Please enter the name of the author");
                 String author = in.nextLine();
@@ -458,6 +525,7 @@ public class Library {
             }while (!valid);
             boolean isYesOrNoInput;
             do {
+                System.out.println("Would you like to add additional authors?");
                 char inCh = in.next().charAt(0);
                 isYesOrNoInput = true;
                 if ((inCh == 'y') || (inCh == 'Y')) {
@@ -475,10 +543,11 @@ public class Library {
         return authorsArray;
     }
 
+    /**
+     * Prompts the user for inputs to pass to the other borrowBook method
+     * including Book name and Author name
+     */
     public void borrowBook() {
-        //get inputs, then pass other borrowBook()
-        //inputs being book title, author first name, author second name
-        //use input methods below
         String name = inputString("Please input the name of the book:");
         boolean invalid = true;
         String firstName ="";
@@ -498,10 +567,18 @@ public class Library {
         borrowBook(name, firstName, secondName);
     }
 
+    /**
+     *  First asks the user to enter the name of a member, the one who is borrowing the book.
+     *  Then checks if that member has over 5 loans already; if so cancel, if not continue.
+     *  Allows the user to re-enter the member if no matches are found
+     *  Finally calls borrowBookOperation to complete the borrowing process
+     *
+     * @param name the title of the book
+     * @param authorFirstName the authors first name
+     * @param authorSecondName the authors second name
+     */
 
     public void borrowBook(String name, String authorFirstName, String authorSecondName) {
-
-        //getting additional inputs
 
         boolean continueBorrow = false;
         boolean repeatInput = true;
@@ -551,6 +628,17 @@ public class Library {
         }
     }
 
+    /**
+     *  Searches for the book based on the name and authors.
+     *  Creates a new loan with the search result book and the member and saves it to loanList
+     *  Allows user to borrow another book if they do not already have 5 or more loans
+     *
+     * @param name the title of the book
+     * @param authorFirstName the authors first name
+     * @param authorSecondName the authors second name
+     * @param member the Member object that is borrowing the book
+     */
+
     public void borrowOperation(String name, String authorFirstName, String authorSecondName, Member member) {
         Scanner in = new Scanner(System.in);
         Boolean isYesOrNoInput;
@@ -578,6 +666,7 @@ public class Library {
                     if (fullSearchResults.size() > 0 && fullSearchResults.get(0).getTotalQty() > 0) {
                         int id =getNewBookLoanId();
                         loanList.add(new Loan( book.getId(), member.getId(), id,LocalDate.now()));
+                        member.addBorrowedBooks(1);
                         System.out.printf("Created new loan with Id: %s",id);
 
                     } else if (fullSearchResults.get(0).getTotalQty() < 1) {
@@ -606,11 +695,16 @@ public class Library {
             char inCh = in.next().charAt(0);
             isYesOrNoInput = true;
             if ((inCh == 'y') || (inCh == 'Y')) {
-
-                borrowOperation(inputString("Please enter the name of the book:"),
-                        inputString("Please enter the first name of the author:" ),
-                        inputString("Please enter the second name of the author:"),
-                        member);
+                if(member.getBorrowedBooks() < 5) {
+                    borrowOperation(inputString("Please enter the name of the book:"),
+                            inputString("Please enter the first name of the author:"),
+                            inputString("Please enter the second name of the author:"),
+                            member);
+                }
+                else{
+                    System.out.println("You have too many existing loans to borrow another book.");
+                    System.out.println("Returning to menu...");
+                }
 
             } else if ((inCh == 'n') || (inCh == 'N')) {
                 System.out.println("Returning to menu...");
@@ -621,12 +715,21 @@ public class Library {
         } while (!isYesOrNoInput);
     }
 
+    /**
+     * Prompts the user to input a loan ID then passes this to the other returnBook method
+     */
     public void returnBook() {
         returnBook(inputInt("Please input the loan ID:"));
     }
 
 
-
+    /**
+     * Uses the id to identify a loan.
+     * Allows the user to re-enter an id, if it is incorrect
+     * Returns the book by deleting the loan from the loanList, changing the number of available copies
+     * for that book and by changing the number of borrowed books a member has.
+     * @param id
+     */
     public void returnBook(int id) {
         Scanner in = new Scanner(System.in);
         Boolean isYesOrNoInput;
@@ -657,8 +760,15 @@ public class Library {
                     if ((inCh == 'y') || (inCh == 'Y')) {
                         handleFine(loan.getBorrowDate());
                         Book book = getBookSearchResults(loan.getTitle()).get(0);
+                        Member borrowerMember = null;
+                        for (Member member : memberList) {
+                            if (loan.getMemberId() == member.getId()) {
+                                borrowerMember = member;
+                            }
+                        }
                         book.changeAvailableQty(1);
                         loanList.remove(loan);
+                        borrowerMember.addBorrowedBooks(-1);
                         returnComplete = true;
                     } else if ((inCh == 'n') || (inCh == 'N')) {
                         System.out.println("Cancelling and returning to menu...");
@@ -672,6 +782,11 @@ public class Library {
         }while(!returnComplete);
     }
 
+    /**
+     * Prompts the user for the following inputs:
+     * Book title, Authors, year of publishing, book quantity.
+     * Then call other addNewBook method
+     */
     public void addNewBook(){
         String name = inputString("Please input the book name:");
         String[] authors = inputAuthors();
@@ -680,17 +795,30 @@ public class Library {
         addNewBook(name,authors,year,quantity);
     }
 
+    /**
+     * Uses inputs to either add to the quantity of an existing book
+     * or to create a new book with new data.
+     * @param name the name of the book
+     * @param authors the authors of the book
+     * @param year the year the book was published
+     * @param quantity the number of books to add to the library
+     */
     public void addNewBook(String name, String[] authors, int year, int quantity) {
         ArrayList<Book> searchResults = getBookSearchResults(name);
         if (searchResults.size() != 0 && searchResults.size() < 2) {
             searchResults.get(0).addAdditionalBooks(quantity);
         } else if (searchResults.size() == 0) {
-
             bookList.add(new Book(getNewBookId(), name, authors, year, quantity));
         } else {
             System.out.println("Search returned multiple entries. Please be more precise.");
         }
     }
+
+    /**
+     * Prompts the user for the following inputs:
+     * Member first name, Member second name.
+     * Passes these inputs to the other addNewMember method
+     */
 
     public void addNewMember(){
         boolean invalid = true;
@@ -712,11 +840,20 @@ public class Library {
         addNewMember(firstName, secondName, LocalDate.now());
     }
 
-
+    /**
+     * Uses inputs to create a new instance of the Member class with that data
+     * @param firstName the member's first name
+     * @param secondName the member's second name
+     * @param date the current date
+     */
     public void addNewMember(String firstName, String secondName, LocalDate date) {
         memberList.add(new Member(getNewMemberId(), firstName, secondName, date));
     }
 
+    /**
+     * Finds a new unique book id by adding 1 to the highest existing id
+     * @return the new id
+     */
     public int getNewBookId() {
         int highest = 0;
 
@@ -730,6 +867,10 @@ public class Library {
         return newId;
     }
 
+    /**
+     * Finds a new unique member id by adding 1 to the highest existing id
+     * @return the new id
+     */
     public int getNewMemberId() {
         int highest = 0;
 
@@ -742,6 +883,11 @@ public class Library {
         int newId = highest + 1;
         return newId;
     }
+
+    /**
+     * Finds a new unique loan id by adding 1 to the highest existing id
+     * @return the new id
+     */
     public int getNewBookLoanId() {
         int highest = 0;
 
@@ -755,10 +901,19 @@ public class Library {
         return newId;
     }
 
+    /**
+     * Prompts the user to input an integer by which to change the quantity of a book
+     */
     public void changeQuantity(){
         changeQuantity( inputString("Please input the name of the book:"),
                 inputInt("Please input the number of copies to add or remove (remove designated by '-' sign)"));
     }
+
+    /**
+     * Uses the book name to identify a book, then changes it's quantity
+     * @param name the book's title
+     * @param quantity the number by which to change the quantity (+ is increase, - is decrease quantity)
+     */
     public void changeQuantity(String name, int quantity) {
 
         Book book;
@@ -777,7 +932,12 @@ public class Library {
         }
     }
 
-
+    /**
+     * Works out if a book is overdue, by calculating the days between its borrow date and the current date
+     * The book is overdue after 30 days
+     * @param borrowDate the date the book was borrowed
+     * @return true if book is overdue, false if not
+     */
     private boolean checkfine(LocalDate borrowDate) {
         LocalDate currentDate = LocalDate.now();
         int daysBetween = (int) DAYS.between(borrowDate, currentDate);
@@ -788,7 +948,11 @@ public class Library {
         return overdue;
     }
 
-
+    /**
+     * Uses a formula to calculate the value of the fine for an overdue loan
+     * @param borrowDate the date the book was borrowed
+     * @return the value of the fine
+     */
     private double calcFineValue(LocalDate borrowDate) {
         LocalDate currentDate = LocalDate.now();
         int daysBetween = (int) DAYS.between(borrowDate, currentDate);
@@ -796,7 +960,13 @@ public class Library {
         return fine;
     }
 
-
+    /**
+     * Allows the user to pay the fine or to not pay the fine.
+     * if the fine is paid, the book return completes,
+     * if not, the book return fails
+     * @param borrowDate the date the book was borrowed
+     * @return true if fine is paid, false if fine is not paid
+     */
     public Boolean handleFine(LocalDate borrowDate) {
         boolean canReturn = true;
         if (checkfine(borrowDate)) {
@@ -825,9 +995,6 @@ public class Library {
             } while (!isYesOrNoInput);
 
         }
-        //return to returnbook()
         return canReturn;
     }
-
-
 }
