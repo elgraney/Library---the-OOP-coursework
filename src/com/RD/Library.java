@@ -41,15 +41,17 @@ public class Library {
      */
     public Library(String file1, String file2, String file3) {
         try {
+            //import all 3 files
             importBooksFile(file1);
             importMembersFile(file2);
             importLoansFile(file3);
-            nameLoans();
-            calculateAvailableCopies();
-            countLoansPerMember();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            nameLoans();//add a name to each loan object
+            calculateAvailableCopies();//calculate how many books are available and how many are on loan
+            countLoansPerMember(); //count the number of loans for each member
+
+        } catch (IOException e) {//if files fail to load
+            throw new RuntimeException("Error in text files: error while loading. Program terminating.");
         }
     }
 
@@ -62,8 +64,8 @@ public class Library {
             for (Member member : memberList) {
                 if (loan.getMemberId() == member.getId()) {
                     member.addBorrowedBooks(1);
-                    if (member.getBorrowedBooks()> 5) {
-                        //should never happen
+                    if (member.getBorrowedBooks()> 5) { //checks if user is borrowing more than 5 books at a time
+                        //should never happen; would mean files are saved incorrectly
                         throw new RuntimeException("Error in text files: More borrowed books than should be allowed.");
                     }
                 }
@@ -79,7 +81,7 @@ public class Library {
         for (Loan loan : loanList){
             for (Book book : bookList){
                 if (loan.getBookId() == book.getId()){
-                    loan.setTitle(book.getTitle());
+                    loan.setTitle(book.getTitle()); //adds the book title to each loan object
                 }
             }
         }
@@ -95,12 +97,12 @@ public class Library {
             for (Loan loan : loanList) {
                 if (loan.getBookId() == book.getId()) {
                     available -= 1;
-                    if (available < 0) {
+                    if (available < 0) { //checks if there are more loans than total of a book
                         throw new RuntimeException("Error in text files: More loans of a book than total copies.");
                     }
                 }
             }
-            book.changeAvailableQty(available);
+            book.changeAvailableQty(available); //increase/decrease available count
         }
     }
 
@@ -112,14 +114,13 @@ public class Library {
      */
     private void importBooksFile(String path) throws IOException {
         BufferedReader br = null;
-
         br = new BufferedReader(new FileReader(path));
-
         String line = null;
 
-        while ((line = br.readLine()) != null) {
-            String[] values = line.split(",");
+        while ((line = br.readLine()) != null) {//read each line in text file
+            String[] values = line.split(",");//split words separated by ','
             bookList.add(new Book(Integer.parseInt(values[0]), values[1], seperateAuthors(values[2]), Integer.parseInt(values[3]), Integer.parseInt(values[4])));
+            //create new book object with file data
         }
         br.close();
     }
@@ -133,10 +134,9 @@ public class Library {
      * @return String array of author names
      */
     private String[] seperateAuthors(String authorString) {
-        String[] authors = authorString.split(":");
+        String[] authors = authorString.split(":");//separates authors by the ':' between them
         return authors;
     }
-
 
     /**
      * Handles the reading of the members.txt file.
@@ -146,15 +146,13 @@ public class Library {
      */
     private void importMembersFile(String path) throws IOException {
         BufferedReader br = null;
-
         br = new BufferedReader(new FileReader(path));
-
         String line = null;
 
-        while ((line = br.readLine()) != null) {
-
-            String[] values = line.split(",");
+        while ((line = br.readLine()) != null) {//read each line in text file
+            String[] values = line.split(",");//split words separated by ','
             memberList.add(new Member(Integer.parseInt(values[0]), values[1], values[2], LocalDate.parse(values[3])));
+            //create new member object with file data
         }
         br.close();
     }
@@ -167,15 +165,13 @@ public class Library {
      */
     private void importLoansFile(String path) throws IOException {
         BufferedReader br = null;
-
         br = new BufferedReader(new FileReader(path));
-
         String line = null;
 
-        while ((line = br.readLine()) != null) {
-
-            String[] values = line.split(",");
+        while ((line = br.readLine()) != null) {//read each line in text file
+            String[] values = line.split(",");//split words separated by ','
             loanList.add(new Loan(Integer.parseInt(values[0]), Integer.parseInt(values[1]), Integer.parseInt(values[2]) , LocalDate.parse(values[3])));
+            //create new loan object with file data
         }
         br.close();
     }
@@ -247,19 +243,20 @@ public class Library {
      */
     public void saveChanges(String file1, String file2, String file3) {
         BufferedWriter writer = null;
-        try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("testBook.txt"), "utf-8"));
+        try { //writes book data to books.txt
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file1), "utf-8"));
             for (int i = 0; i < bookList.size(); i++) {
                 Book book = bookList.get(i);
+                //writes in proper format
                 writer.write(book.getId() + "," + book.getTitle() + "," + String.join(":", (book.getAuthors())) + "," + book.getYear() + "," + book.getTotalQty());
                 writer.newLine();
             }
             writer.close();
-        } catch (IOException e) {
+        } catch (IOException e) { //IO exception means the file couldn't be written to properly
             System.out.println("IOException: Saving books data failed");
         }
-        try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("testMember.txt"), "utf-8"));
+        try { //writes member data to members.txt
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file2), "utf-8"));
             for (int i = 0; i < memberList.size(); i++) {
                 Member member = memberList.get(i);
                 writer.write(member.getId() + "," + member.getFirstName() + "," + member.getSecondName() + "," + member.getDateJoin());
@@ -269,8 +266,8 @@ public class Library {
         } catch (IOException e) {
             System.out.println("IOException: Saving members data failed");
         }
-        try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("testLoans.txt"), "utf-8"));
+        try { //writes loan data to loans.txt
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file3), "utf-8"));
             for (int i = 0; i < loanList.size(); i++) {
                 Loan loan = loanList.get(i);
                 writer.write(loan.getId() + "," + loan.getBookId() + "," + loan.getMemberId() + "," + loan.getBorrowDate());
@@ -281,7 +278,6 @@ public class Library {
             System.out.println("IOException: Saving loans data failed");
         }
     }
-
 
     /**
      *Gets user input to pass to the alternative searchBook method
@@ -297,15 +293,15 @@ public class Library {
      */
     public void searchBook(String name) {
         //this function specifically prints the search results found in getBookSearchResults
-        ArrayList<Book> searchResults = getBookSearchResults(name);
+        ArrayList<Book> searchResults = getBookSearchResults(name); //gets books with matching names
         System.out.println("Search Results:");
-        if (searchResults.size() > 0) {
+        if (searchResults.size() > 0) { //if there are search results
             for (int i = 0; i < searchResults.size(); i++) {
                 Book book = searchResults.get(i);
                 System.out.printf("Title: %s, Id: %s, Authors: %s, Total copies: %s, Available copies: %s\n",
                         book.getTitle(), book.getId(),String.join(", ", (book.getAuthors())) , book.getTotalQty(), book.getAvailableQty());
             }
-        } else {
+        } else { //if there are no search results
             System.out.println("No matches found");
         }
     }
@@ -317,10 +313,10 @@ public class Library {
      * @return the ArrayList of matching books
      */
     private ArrayList<Book> getBookSearchResults(String name) {
-        //actual seach function here. returns arrayList of search results
         ArrayList<Book> searchResults = new ArrayList<Book>();
         for (int i = 0; i < bookList.size(); i++) {
             Book book = bookList.get(i);
+            //if book title contains any substring of 'name' (not case sensitive)
             if (book.getTitle().toLowerCase().contains(name.toLowerCase())) {
                 searchResults.add(book);
             }
@@ -338,12 +334,13 @@ public class Library {
         do {
             String fullName = inputString("Please input the member's full name");
             String[] names = fullName.split(" ");
-            try{
+            try{//should at least two entries in the names array
                 firstName = names[0];
                 secondName = names[1];
                 invalid = false;
             }
-            catch (IndexOutOfBoundsException e){
+            catch (IndexOutOfBoundsException e){//less than 2 entries in the names array
+                //means the user has not entered 2 names separated by a space
                 System.out.println("Please be sure to input both first and second names separated by a space.");
             }
         }while(invalid);
@@ -363,27 +360,28 @@ public class Library {
      */
     public void searchMember(String firstName, String secondName) {
 
-        ArrayList<Member> searchResults = getMemberSearchResults(firstName, secondName);
+        ArrayList<Member> searchResults = getMemberSearchResults(firstName, secondName);//finds matching members
         System.out.println("Search Results:");
         if (searchResults.size() > 0) {
             for (int i = 0; i < searchResults.size(); i++) {
                 Member member = searchResults.get(i);
+                //outputs member data in this format
                 System.out.printf("Name: %s %s, ID: %s, Join Date: %s\n",
                         member.getFirstName(), member.getSecondName(), member.getId(), member.getDateJoin());
                 System.out.println("Current loans:");
                 ArrayList<Loan> loans = new ArrayList<>();
                 for (Loan loan : loanList) {
-                    if (loan.getMemberId() == member.getId()) {
+                    if (loan.getMemberId() == member.getId()) { //checks if member ID in loan matches member ID in member
                         loans.add(loan);
                     }
                 }
                 System.out.printf("You currently have %d borrowed books\n", loans.size());
-                for (Loan loan : loans) {
+                for (Loan loan : loans) { //for each loan, output data about it
                     System.out.printf("Title: %s, Book ID: %s, Loan ID: %s, Borrow Date: %s, Return Date: %s\n",
                             loan.getTitle(), loan.getBookId(), loan.getId(), loan.getBorrowDate(), loan.getReturnDate());
-                    if (checkfine(loan.getBorrowDate())) {
+                    if (checkfine(loan.getBorrowDate())) { //if the book is overdue
                         System.out.printf("This book is overdue and has accumulated a fine of £%.2f\n",
-                                calcFineValue(loan.getBorrowDate()));
+                                calcFineValue(loan.getBorrowDate())); //work out and output the value of the fine
                     }
                 }
             }
@@ -404,6 +402,8 @@ public class Library {
         ArrayList<Member> searchResults = new ArrayList<Member>();
         for (int i = 0; i < memberList.size(); i++) {
             Member member = memberList.get(i);
+            //checks if both member first name and member second name contain a substring of firstName and
+            //secondName respectively (not case sensitive
             if (member.getFirstName().toLowerCase().contains(firstName.toLowerCase()) &&
                     member.getSecondName().toLowerCase().contains(secondName.toLowerCase())) {
                 searchResults.add(member);
@@ -412,9 +412,8 @@ public class Library {
         return searchResults;
     }
     /**
-     * Iterates through every member in memberList checking if each of their titles contains a
-     * substring of both the first and second name
-     * If it does, add that member to an ArrayList of search results.
+     * Iterates through every loan in loanList checking if its id matches the passed id
+     * If it does, return that loan immediately
      * @param id the unique ID of the loan
      * @return a matching loan if a match is found, null if no matching loan is found
      */
@@ -442,21 +441,17 @@ public class Library {
         ArrayList<Member> member = memberList;
         while (!inputPassed) {
             System.out.println("Please input your name:");
-
-
-            member = getMemberSearchResults(in.next(), in.next());
-            if (member.size() > 0) {
+            member = getMemberSearchResults(in.next(), in.next());//input first name and second name
+            if (member.size() > 0) {//there are matching members
                 inputPassed = true;
-            } else {
+            } else { // there are no matching members
                 System.out.println("No matching members. Would you like to re-enter your name? (Y/N)");
                 Boolean isYesOrNoInput;
-                do {
+                do {//check if the user wants to try again
                     char inCh = in.next().charAt(0);
                     isYesOrNoInput = true;
                     if ((inCh == 'y') || (inCh == 'Y')) {
-
                     } else if ((inCh == 'n') || (inCh == 'N')) {
-
                         System.out.println("Returning to menu...");
                         return new ArrayList<>();
                     } else {
@@ -494,10 +489,10 @@ public class Library {
             Scanner in = new Scanner(System.in);
             String id = in.next();
 
-            try {
+            try {//inputs what should be an integer
                 intId = Integer.parseInt(id);
                 valid =true;
-            }catch(NumberFormatException e){
+            }catch(NumberFormatException e){//catches if input is not integer
                 System.out.println("The input must be entirely numerical; non numerical characters are not allowed.");
             }
         }while (!valid);
@@ -512,10 +507,10 @@ public class Library {
     private String[] inputAuthors(){
         boolean continueInput = true;
         boolean valid = false;
-        ArrayList<String> authors = new ArrayList<String>();
-        do{
+        ArrayList<String> authors = new ArrayList<String>(); //arraylist because final size is unknown
+        do{//loops while more authors are still being added
             Scanner in = new Scanner(System.in);
-            do {
+            do {//makes sure each author input is in the right format
                 System.out.println("Please enter the name of the author");
                 String author = in.nextLine();
                 if (author.contains(",")) {
@@ -526,7 +521,7 @@ public class Library {
                 }
             }while (!valid);
             boolean isYesOrNoInput;
-            do {
+            do {//check if the user wants to add more authors
                 System.out.println("Would you like to add additional authors?");
                 char inCh = in.next().charAt(0);
                 isYesOrNoInput = true;
@@ -541,7 +536,7 @@ public class Library {
                 }
             } while (!isYesOrNoInput);
         }while (continueInput);
-        String[] authorsArray = authors.toArray(new String[0]);
+        String[] authorsArray = authors.toArray(new String[0]); //convert to an array to work with other methods
         return authorsArray;
     }
 
@@ -557,12 +552,13 @@ public class Library {
         do {
             String fullName = inputString("Please input the author's full name");
             String[] names = fullName.split(" ");
-            try{
+            try{//should at least two entries in the names array
                 firstName = names[0];
                 secondName = names[1];
                 invalid = false;
             }
-            catch (IndexOutOfBoundsException e){
+            catch (IndexOutOfBoundsException e){//less than 2 entries in the names array
+                //means the user has not entered 2 names separated by a space
                 System.out.println("Please be sure to input both first and second names separated by a space.");
             }
         }while(invalid);
@@ -581,30 +577,29 @@ public class Library {
      */
 
     public void borrowBook(String name, String authorFirstName, String authorSecondName) {
-
         boolean continueBorrow = false;
         boolean repeatInput = true;
         boolean isYesOrNoInput;
         Scanner in = new Scanner(System.in);
         ArrayList<Member> member = inputMemberName();
         do {
-            if (member.size() == 0) {
-                break;
+            if (member.size() == 0) { // user cancelled inputting member name
+                System.out.println("Returning to menu");
+                return;
             }
-
             System.out.println("Found the following member");
             showMember(member.get(0));
             System.out.println("Is this You? (Y/N)");
             char inCh = in.next().charAt(0);
             isYesOrNoInput = true;
             if ((inCh == 'y') || (inCh == 'Y')) {
-                if (member.get(0).getBorrowedBooks() >=5){
+                if (member.get(0).getBorrowedBooks() >=5){ //not allowed to borrow more if member already has 5 loans
                     System.out.println("You have too many borrowed books already. Return some before borrowing more.");
                     break;
                 }
                 continueBorrow = true;
                 repeatInput = false;
-            } else if ((inCh == 'n') || (inCh == 'N')) {
+            } else if ((inCh == 'n') || (inCh == 'N')) { //offers option to retry
                 System.out.println("Would you like to re-enter your name? (Y/N)");
                 do {
                     inCh = in.next().charAt(0);
@@ -625,7 +620,7 @@ public class Library {
             }
         } while (!isYesOrNoInput || repeatInput);
 
-        if (continueBorrow) {
+        if (continueBorrow) {//if all previous input checks pass, borrow book
             borrowOperation(name, authorFirstName, authorSecondName, member.get(0));
         }
     }
@@ -655,13 +650,12 @@ public class Library {
                 }
             }
         }
-        if (fullSearchResults.size() > 0) {
+        if (fullSearchResults.size() > 0) {//if there are matching search results
             Book book = fullSearchResults.get(0);
             System.out.println("Book '" + book.getTitle() + "' selected.");
 
-
             System.out.println("Would you like to borrow this book? (Y/N)");
-            do {
+            do {//checks with user if they want to proceed
                 char inCh = in.next().charAt(0);
                 isYesOrNoInput = true;
                 if ((inCh == 'y') || (inCh == 'Y')) {
@@ -691,19 +685,18 @@ public class Library {
         }
 
         System.out.println("Would you like to select another book? (Y/N)");
-        //do yes no
         in = new Scanner(System.in);
         do {
             char inCh = in.next().charAt(0);
             isYesOrNoInput = true;
             if ((inCh == 'y') || (inCh == 'Y')) {
-                if(member.getBorrowedBooks() < 5) {
+                if(member.getBorrowedBooks() < 5) {//must check again if member has 5 or more loans already
                     borrowOperation(inputString("Please enter the name of the book:"),
                             inputString("Please enter the first name of the author:"),
                             inputString("Please enter the second name of the author:"),
                             member);
                 }
-                else{
+                else{ //has 5 or more loans, so is not allowed to borrow more
                     System.out.println("You have too many existing loans to borrow another book.");
                     System.out.println("Returning to menu...");
                 }
@@ -738,10 +731,10 @@ public class Library {
         Boolean returnComplete = false;
         do {
             Loan loan = getLoanSearchResult(id);
-            if (loan == null) {
+            if (loan == null) { //no matching search results found
                 System.out.println("No matching loans found.");
                 System.out.println("Would you like to re-enter the ID? (Y/N)");
-                do {
+                do { //get yes/no input
                     char inCh = in.next().charAt(0);
                     isYesOrNoInput = true;
                     if ((inCh == 'y') || (inCh == 'Y')) {
@@ -754,7 +747,7 @@ public class Library {
                         isYesOrNoInput = false;
                     }
                 } while (!isYesOrNoInput);
-            } else {
+            } else { //valid matching loans exist
                 System.out.printf("You are returning '%s', is this correct? (Y/N)\n", loan.getTitle());
                 do {
                     char inCh = in.next().charAt(0);
@@ -764,7 +757,7 @@ public class Library {
                         Book book = getBookSearchResults(loan.getTitle()).get(0);
                         Member borrowerMember = null;
                         for (Member member : memberList) {
-                            if (loan.getMemberId() == member.getId()) {
+                            if (loan.getMemberId() == member.getId()) {//finds the member the loan belongs to
                                 borrowerMember = member;
                             }
                         }
@@ -772,9 +765,11 @@ public class Library {
                         loanList.remove(loan);
                         borrowerMember.addBorrowedBooks(-1);
                         returnComplete = true;
+
                     } else if ((inCh == 'n') || (inCh == 'N')) {
                         System.out.println("Cancelling and returning to menu...");
                         return;
+                        
                     } else {
                         System.out.println("******** Wrong input. Try again.");
                         isYesOrNoInput = false;
