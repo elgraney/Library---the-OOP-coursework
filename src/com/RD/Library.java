@@ -10,6 +10,8 @@ import static java.time.temporal.ChronoUnit.DAYS;
  * Creates a simulation of a library containing a list of library books, library
  * members, and current book loans. Additionally contains all methods related to
  * handling books, members and loans in the general case.
+ *
+ * @version 09/03/2018
  */
 
 
